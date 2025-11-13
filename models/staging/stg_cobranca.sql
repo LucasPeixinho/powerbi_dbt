@@ -1,0 +1,5 @@
+SELECT
+    CODCOB,
+    COBRANCA
+FROM
+    cedep.PCCOB

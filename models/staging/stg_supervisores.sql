@@ -1,0 +1,5 @@
+SELECT
+    CODSUPERVISOR,
+    NOME
+FROM
+    cedep.PCSUPERV

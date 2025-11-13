@@ -1,0 +1,5 @@
+SELECT
+    CODCLI,
+    CLIENTE
+FROM
+    cedep.PCCLIENT 

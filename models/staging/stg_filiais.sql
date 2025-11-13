@@ -1,0 +1,7 @@
+SELECT
+    CODIGO,
+    RAZAOSOCIAL,
+    ENDERECO,
+    CIDADE
+FROM
+    cedep.PCFILIAL

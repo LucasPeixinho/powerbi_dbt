@@ -1,0 +1,6 @@
+SELECT
+    CODUSUR,
+    NOME,
+    CODSUPERVISOR
+FROM
+    cedep.PCUSUARI

@@ -1,0 +1,26 @@
+14:38:14  Running with dbt=1.9.4
+14:38:14  oracle adapter: Running in thick mode
+14:38:14  Registered adapter: oracle=1.9.4
+14:38:15  Found 6 models, 10 data tests, 488 macros
+14:38:15  
+14:38:15  Concurrency: 4 threads (target='dev')
+14:38:15  
+14:38:17  4 of 6 START sql table model dbt.stg_inadimplencia ............................. [RUN]
+14:38:17  3 of 6 START sql table model dbt.stg_filiais ................................... [RUN]
+14:38:17  1 of 6 START sql table model dbt.stg_clientes .................................. [RUN]
+14:38:17  2 of 6 START sql table model dbt.stg_cobranca .................................. [RUN]
+14:38:18  2 of 6 OK created sql table model dbt.stg_cobranca ............................. [OK in 0.42s]
+14:38:18  3 of 6 OK created sql table model dbt.stg_filiais .............................. [OK in 0.42s]
+14:38:18  5 of 6 START sql table model dbt.stg_supervisores .............................. [RUN]
+14:38:18  6 of 6 START sql table model dbt.stg_vendedores ................................ [RUN]
+14:38:18  1 of 6 OK created sql table model dbt.stg_clientes ............................. [OK in 0.48s]
+14:38:18  6 of 6 OK created sql table model dbt.stg_vendedores ........................... [OK in 0.16s]
+14:38:18  5 of 6 OK created sql table model dbt.stg_supervisores ......................... [OK in 0.16s]
+14:38:34  4 of 6 OK created sql table model dbt.stg_inadimplencia ........................ [OK in 17.12s]
+14:38:34  
+14:38:34  Finished running 6 table models in 0 hours 0 minutes and 19.35 seconds (19.35s).
+14:38:34  
+14:38:34  Completed successfully
+14:38:34  
+14:38:34  Done. PASS=6 WARN=0 ERROR=0 SKIP=0 TOTAL=6
+=== FINALIZADO === 

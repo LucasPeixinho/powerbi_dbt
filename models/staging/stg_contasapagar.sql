@@ -18,7 +18,8 @@ WITH LANCAMENTOS_BASE AS (
         HISTORICO, 
         CODROTINACAD
     FROM cedep.PCLANC 
-    WHERE DTLANC BETWEEN :MDTPAGTOINI AND :MDTPAGTOFIM
+    WHERE DTLANC BETWEEN TO_DATE('{{ var("dt_inicio", "2020-01-01") }}', 'YYYY-MM-DD')
+                AND TO_DATE('{{ var("dt_fim", "2025-12-31") }}', 'YYYY-MM-DD')
     
     UNION ALL
     
@@ -47,7 +48,8 @@ WITH LANCAMENTOS_BASE AS (
         AND BA.DTPAGTO IS NOT NULL 
         AND BA.DTESTORNOBAIXA IS NULL 
         AND LA.CODFILIAL IN ('1', '10', '2', '3', '4', '7', '8', '9', '99') 
-        AND A.DTLANC BETWEEN :MDTPAGTOINI AND :MDTPAGTOFIM
+        AND A.DTLANC BETWEEN TO_DATE('{{ var("dt_inicio", "2020-01-01") }}', 'YYYY-MM-DD')
+                AND TO_DATE('{{ var("dt_fim", "2025-12-31") }}', 'YYYY-MM-DD')
 )
 SELECT 
     LB.NUMNOTA,

@@ -1,0 +1,14 @@
+SELECT
+    DATE '2010-01-01' + (LEVEL - 1) AS data,
+    EXTRACT(YEAR FROM (DATE '2010-01-01' + (LEVEL - 1))) AS ano,
+    EXTRACT(MONTH FROM (DATE '2010-01-01' + (LEVEL - 1))) AS mes,
+    EXTRACT(DAY FROM (DATE '2010-01-01' + (LEVEL - 1))) AS dia,
+    TO_CHAR((DATE '2010-01-01' + (LEVEL - 1)), 'DY', 'NLS_DATE_LANGUAGE=ENGLISH') AS dia_semana,
+    CASE 
+        WHEN TO_CHAR((DATE '2010-01-01' + (LEVEL - 1)), 'DY', 'NLS_DATE_LANGUAGE=ENGLISH') 
+             IN ('SAT','SUN') THEN 0
+        ELSE 1
+    END AS dia_util
+FROM dual
+CONNECT BY LEVEL <= (DATE '2040-12-31' - DATE '2010-01-01') + 1
+

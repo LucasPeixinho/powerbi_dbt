@@ -5,9 +5,9 @@ SELECT
     CODUSUR,
     PREST,
     DUPLIC,
-    TO_CHAR(DTVENC, 'DD-MM-YYYY') as DTVENC,
-    TO_CHAR(DTPAG, 'DD-MM-YYYY') as DTPAG,
-    TO_CHAR(DTEMISSAO, 'DD-MM-YYYY') as DTEMISSAO,
+    DTVENC,      -- ✅ Mantém como DATE
+    DTPAG,       -- ✅ Mantém como DATE  
+    DTEMISSAO,   -- ✅ Mantém como DATE
     VALOR,
     VPAGO
 FROM

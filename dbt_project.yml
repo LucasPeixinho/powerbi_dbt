@@ -34,3 +34,5 @@ models:
   powerbi:
     staging:
       +materialized: table
+    dw:
+      +materialized: table

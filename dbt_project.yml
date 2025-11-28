@@ -34,5 +34,6 @@ models:
   powerbi:
     staging:
       +materialized: table
+      +pre-hook: "ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY'"
     dw:
       +materialized: table

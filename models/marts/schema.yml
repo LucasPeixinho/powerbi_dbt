@@ -1,0 +1,37 @@
+models:
+  - name: mart_lancamentos_rateio
+    description: Tabela de lancamentos com rateio de centro de custo
+    columns:
+      - name: recnum
+        description: Codigo de lancamento
+        data_type: number
+      - name: codconta
+        description: Código de conta
+        data_type: number
+      - name: codfornec
+        description: Código de fornecedor
+        data_type: number
+      - name: codfilial
+        description: Código de filial
+        data_type: varchar2
+      - name: dtemissao
+        description: Data de emissão
+        data_type: date
+      - name: dtlanc
+        description: Data de lancamento
+        data_type: date
+      - name: dtvenc
+        description: Data de vencimento
+        data_type: date
+      - name: dtpagto
+        description: Data de pagamento
+        data_type: date
+      - name: dtcompetencia
+        description: Data de competência
+        data_type: date
+      - name: valor
+        description: Valor do lancamento
+        data_type: number
+      - name: vpago
+        description: Valor pago
+        data_type: number

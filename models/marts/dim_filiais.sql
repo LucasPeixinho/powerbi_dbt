@@ -4,4 +4,4 @@ SELECT
     ENDERECO,
     CIDADE
 FROM
-    {{ source('cedep', 'pcfilial')}} 
+    {{ ref('int_filiais')}} 

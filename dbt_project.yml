@@ -33,7 +33,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   powerbi:
     staging:
+      +materialized: view
+
+    intermediate:
       +materialized: table
-      +pre-hook: "ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY'"
-    dw:
+
+    marts:
       +materialized: table
+
+seeds:
+  powerbi:
+    +delimiter: ";"

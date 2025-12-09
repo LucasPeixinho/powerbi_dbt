@@ -1,0 +1,68 @@
+﻿N1_CODIGO;N1_DESCRICAO;N2_CODIGO;N2_DESCRICAO;N3_CODIGO;N3_DESCRICAO;N1_CONCAT;N2_CONCAT;N3_CONCAT;CODFILIAL
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.001;GESTAO DA FILIAL (1);01.001.001;Gestão da filial;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.001 - GESTAO DA FILIAL (1);01.001.001 - Gestão da filial;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.001;GESTAO DA FILIAL (1);01.001.002;Apoio administrativo;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.001 - GESTAO DA FILIAL (1);01.001.002 - Apoio administrativo;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002;Vendas;01.002.001;Vendas internas e televendas;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002 - Vendas;01.002.001 - Vendas internas e televendas;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002;Vendas;01.002.002;Vendas externas;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002 - Vendas;01.002.002 - Vendas externas;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002;Vendas;01.002.003;Serviços (troca de óleo);01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.002 - Vendas;01.002.003 - Serviços (troca de óleo);01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.003;Logistica;01.003.002;Logistica interna;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.003 - Logistica;01.003.002 - Logistica interna;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.003;Logistica;01.003.003;Logistica externa;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.003 - Logistica;01.003.003 - Logistica externa;01
+01;FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.004;Serviços gerais;01.004.001;Segurança, limpeza, manutenção e conserv;01 - FILIAL 01 - AV. R. DE JANEIRO - F. DE SA;01.004 - Serviços gerais;01.004.001 - Segurança, limpeza, manutenção e conserv;01
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.001;GESTAO DA FILIAL (2);02.001.001;Gestão da filial;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.001 - GESTAO DA FILIAL (2);02.001.001 - Gestão da filial;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.001;GESTAO DA FILIAL (2);02.001.002;Apoio administrativo;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.001 - GESTAO DA FILIAL (2);02.001.002 - Apoio administrativo;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002;Vendas;02.002.001;Vendas internas e televendas;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002 - Vendas;02.002.001 - Vendas internas e televendas;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002;Vendas;02.002.002;Ventas externas;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002 - Vendas;02.002.002 - Ventas externas;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002;Vendas;02.002.003;Serviços (troca de óleo);02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.002 - Vendas;02.002.003 - Serviços (troca de óleo);02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003;Logistica;02.003.001;Gestão da logistica( Geren, ent NF, fat);02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003 - Logistica;02.003.001 - Gestão da logistica( Geren, ent NF, fat);02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003;Logistica;02.003.002;Logistica int. (receb, armaz, expedição);02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003 - Logistica;02.003.002 - Logistica int. (receb, armaz, expedição);02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003;Logistica;02.003.003;Logistica ext. (roteirização, distrib );02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003 - Logistica;02.003.003 - Logistica ext. (roteirização, distrib );02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003;Logistica;02.003.004;Manutenção de veículos;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.003 - Logistica;02.003.004 - Manutenção de veículos;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.004;Serviços gerais;02.004.001;Segurança, limp. manut. e conservação;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.004 - Serviços gerais;02.004.001 - Segurança, limp. manut. e conservação;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.001;Diretoria;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.001 - Diretoria;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.002;Financeiro;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.002 - Financeiro;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.003;Recursos humanos;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.003 - Recursos humanos;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.004;T.I;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.004 - T.I;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.005;Contabilidade e fiscal;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.005 - Contabilidade e fiscal;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010;Administração geral;02.010.006;Controladoria;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.010 - Administração geral;02.010.006 - Controladoria;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011;Comercial do grupo;02.011.001;Gestão das vendas varejo e serviços;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011 - Comercial do grupo;02.011.001 - Gestão das vendas varejo e serviços;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011;Comercial do grupo;02.011.002;Gestão das vendas atacado e distribuição;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011 - Comercial do grupo;02.011.002 - Gestão das vendas atacado e distribuição;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011;Comercial do grupo;02.011.003;Suprimentos (Compras int. e importação);02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011 - Comercial do grupo;02.011.003 - Suprimentos (Compras int. e importação);02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011;Comercial do grupo;02.011.004;Marketing;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011 - Comercial do grupo;02.011.004 - Marketing;02
+02;FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011;Comercial do grupo;02.011.005;SAC;02 - FILIAL 02 - VENDAS E LOGISTICA BR 324;02.011 - Comercial do grupo;02.011.005 - SAC;02
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.001;GESTAO DA FILIAL (3);03.001.001;Gestão da filial;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.001 - GESTAO DA FILIAL (3);03.001.001 - Gestão da filial;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.001;GESTAO DA FILIAL (3);03.001.002;Apoio administrativo;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.001 - GESTAO DA FILIAL (3);03.001.002 - Apoio administrativo;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002;Vendas;03.002.001;Vendas internas e televendas;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002 - Vendas;03.002.001 - Vendas internas e televendas;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002;Vendas;03.002.002;Vendas externas;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002 - Vendas;03.002.002 - Vendas externas;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002;Vendas;03.002.003;Serviços (troca de óleo);03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.002 - Vendas;03.002.003 - Serviços (troca de óleo);03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.003;Logística;03.003.002;Logística interna;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.003 - Logística;03.003.002 - Logística interna;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.003;Logística;03.003.003;Logística externa;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.003 - Logística;03.003.003 - Logística externa;03
+03;FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.004;Serviços gerais;03.004.001;Segurança, limpeza, manutenção e conserv;03 - FILIAL 03- PRESIDENTE DUTRA - F. DE SANT;03.004 - Serviços gerais;03.004.001 - Segurança, limpeza, manutenção e conserv;03
+04;FILIAL 04 - ITABUNA;04.001;GESTAO DA FILIAL(4);04.001.001;Gestão da filial;04 - FILIAL 04 - ITABUNA;04.001 - GESTAO DA FILIAL(4);04.001.001 - Gestão da filial;04
+04;FILIAL 04 - ITABUNA;04.001;GESTAO DA FILIAL(4);04.001.002;Apoio administrativo;04 - FILIAL 04 - ITABUNA;04.001 - GESTAO DA FILIAL(4);04.001.002 - Apoio administrativo;04
+04;FILIAL 04 - ITABUNA;04.002;Vendas;04.002.001;Vendas internas e televendas;04 - FILIAL 04 - ITABUNA;04.002 - Vendas;04.002.001 - Vendas internas e televendas;04
+04;FILIAL 04 - ITABUNA;04.002;Vendas;04.002.002;Vendas externas;04 - FILIAL 04 - ITABUNA;04.002 - Vendas;04.002.002 - Vendas externas;04
+04;FILIAL 04 - ITABUNA;04.002;Vendas;04.002.003;Serviços (troca de óleo);04 - FILIAL 04 - ITABUNA;04.002 - Vendas;04.002.003 - Serviços (troca de óleo);04
+04;FILIAL 04 - ITABUNA;04.003;Logística;04.003.002;Logística interna;04 - FILIAL 04 - ITABUNA;04.003 - Logística;04.003.002 - Logística interna;04
+04;FILIAL 04 - ITABUNA;04.003;Logística;04.003.003;Logística externa;04 - FILIAL 04 - ITABUNA;04.003 - Logística;04.003.003 - Logística externa;04
+04;FILIAL 04 - ITABUNA;04.004;Serviços gerais;04.004.001;Segurança, limpeza, manutenção e conserv;04 - FILIAL 04 - ITABUNA;04.004 - Serviços gerais;04.004.001 - Segurança, limpeza, manutenção e conserv;04
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.001;GESTAO DA FILIAL (7);07.001.001;Gestão da filial;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.001 - GESTAO DA FILIAL (7);07.001.001 - Gestão da filial;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.001;GESTAO DA FILIAL (7);07.001.002;Apoio administrativo;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.001 - GESTAO DA FILIAL (7);07.001.002 - Apoio administrativo;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002;Vendas;07.002.001;Vendas internas e televendas;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002 - Vendas;07.002.001 - Vendas internas e televendas;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002;Vendas;07.002.002;Ventas externas;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002 - Vendas;07.002.002 - Ventas externas;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002;Vendas;07.002.003;Serviços (troca de óleo);07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.002 - Vendas;07.002.003 - Serviços (troca de óleo);07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.003;Logística;07.003.002;Logística interna;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.003 - Logística;07.003.002 - Logística interna;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.003;Logística;07.003.003;Logística externa;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.003 - Logística;07.003.003 - Logística externa;07
+07;FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.004;Serviços gerais;07.004.001;Segurança, limpeza, manutenção e conserv;07 - FILIAL 07 - AV. JOSE FALCAO - FEIRA DE S;07.004 - Serviços gerais;07.004.001 - Segurança, limpeza, manutenção e conserv;07
+08;FILIAL 08 - SALVADOR;08.001;GESTAO DA FILIAL(8);08.001.001;Gestão da filial;08 - FILIAL 08 - SALVADOR;08.001 - GESTAO DA FILIAL(8);08.001.001 - Gestão da filial;08
+08;FILIAL 08 - SALVADOR;08.001;GESTAO DA FILIAL(8);08.001.002;Apoio administrativo;08 - FILIAL 08 - SALVADOR;08.001 - GESTAO DA FILIAL(8);08.001.002 - Apoio administrativo;08
+08;FILIAL 08 - SALVADOR;08.002;Vendas;08.002.001;Vendas internas e televendas;08 - FILIAL 08 - SALVADOR;08.002 - Vendas;08.002.001 - Vendas internas e televendas;08
+08;FILIAL 08 - SALVADOR;08.002;Vendas;08.002.002;Vendas externas;08 - FILIAL 08 - SALVADOR;08.002 - Vendas;08.002.002 - Vendas externas;08
+08;FILIAL 08 - SALVADOR;08.002;Vendas;08.002.003;Serviços (troca de óleo);08 - FILIAL 08 - SALVADOR;08.002 - Vendas;08.002.003 - Serviços (troca de óleo);08
+08;FILIAL 08 - SALVADOR;08.003;Logística;08.003.002;Logística interna;08 - FILIAL 08 - SALVADOR;08.003 - Logística;08.003.002 - Logística interna;08
+08;FILIAL 08 - SALVADOR;08.003;Logística;08.003.003;Logística externa;08 - FILIAL 08 - SALVADOR;08.003 - Logística;08.003.003 - Logística externa;08
+08;FILIAL 08 - SALVADOR;08.004;Serviços gerais;08.004.001;Segurança, limpeza, manutenção e conserv;08 - FILIAL 08 - SALVADOR;08.004 - Serviços gerais;08.004.001 - Segurança, limpeza, manutenção e conserv;08
+09;FILIAL 09 - BR9;09.001;GESTÃO DA FILIAL(9);09.001.001;Gestão Filial;09 - FILIAL 09 - BR9;09.001 - GESTÃO DA FILIAL(9);09.001.001 - Gestão Filial;09
+09;FILIAL 09 - BR9;09.002;Vendas;09.002.001;Vendas internas e televendas;09 - FILIAL 09 - BR9;09.002 - Vendas;09.002.001 - Vendas Internas e Televendas;09
+10;FILIAL 10 - (DEPÓSITO BR);10.001;GESTÃO DA FILIAL (10);10.001.001;GESTÃO DA FILIAL (10);10 - FILIAL 10 - (DEPÓSITO BR);10.001 - GESTÃO DA FILIAL (10);10.001 - GESTÃO DA FILIAL (10);10
+20;CENTROS DE CUSTO A CLASSIFICAR;20.000;CENTRO DE CUSTO A CLASSIFICAR;20.000;CENTRO DE CUSTO A CLASSIFICAR;20 - CENTROS DE CUSTO A CLASSIFICAR;20.000 - CENTRO DE CUSTO A CLASSIFICAR;20.000 - CENTRO DE CUSTO A CLASSIFICAR;20
+30;GERAL;30.000;GERAL;30.000;GERAL;30 - GERAL;30.000 - GERAL;30.000 - GERAL;30
+99;SEM CENTRO DE CUSTO;99.999;SEM CENTRO DE CUSTO;99.999;SEM CENTRO DE CUSTO;90 - SEM CENTRO DE CUSTO;99.999 - SEM CENTRO DE CUSTO;99.999 - SEM CENTRO DE CUSTO;99

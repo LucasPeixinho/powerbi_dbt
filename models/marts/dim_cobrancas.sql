@@ -2,4 +2,4 @@ SELECT
     CODCOB,
     COBRANCA
 FROM
-    {{ source('cedep', 'pccob')}} 
+    {{ ref('int_cobrancas') }}

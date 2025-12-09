@@ -3,4 +3,4 @@ SELECT
     NOME,
     CODSUPERVISOR
 FROM
-    cedep.PCUSUARI
+    {{ source('cedep', 'pcusuari')}} 

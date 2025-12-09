@@ -1,0 +1,55 @@
+models:
+  - name: int_clientes
+    description: Tabela de clientes com datas tratadas.
+    columns:
+      - name: codcli
+        description: Código do cliente
+        data_type: number
+      - name: cliente
+        description: Nome do cliente
+        data_type: varchar2
+      - name: dtprimcompra_tratada
+        description: Data de primeira compra (valores null substituídos por 01/01/1900)
+        data_type: date
+      - name: inicioativ_tratada
+        description: Data de início de atividade (valores null substituídos por 01/01/1900
+        data_type: date
+      - name: bairrocom
+        description: Coluna para verificação se cliente é exceção de crédito
+        data_type: varchar2
+      - name: tipofj
+        description: Tipo de pessoa (Física ou Jurídica)
+        data_type: varchar2
+  - name: int_vendedores
+    description: Tabela de vendedores
+    columns:
+      - name: codusur
+        description: Código/RCA de vendedor
+        data_type: number
+        data_tests:
+          - not_null
+          - unique
+      - name: nome
+        description: Nome do vendedor
+        data_type: varchar2
+      - name: codsupervisor
+        description: Código do supervisor
+        data_type: number
+      - name: nome_vendedor
+        description: Nome do vendedor com o código/RCA
+        data_type: varchar2
+  - name: int_fornecedores
+    description: Tabela de fornecedores
+    columns:
+      - name: codfornec
+        description: Código de fornecedor
+        data_type: number
+        data_tests:
+          - not_null
+          - unique
+      - name: fornecedor
+        description: Nome do fornecedor
+        data_type: varchar2
+      - name: tipo_cliente
+        description: Tipo de fornecedor
+        data_type: varchar2

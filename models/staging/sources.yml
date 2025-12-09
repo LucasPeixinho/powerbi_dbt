@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  -  name: cedep
+     schema: cedep
+     tables:
+       -  name: pclanc
+       -  name: pcfornec
+       -  name: pcclient
+       -  name: pccob
+       -  name: pcfilial
+       -  name: pcprest
+       -  name: pcsuperv
+       -  name: pcusuari
+       -  name: pclancadiantfornec
+       -  name: pcrateiocentrocusto
+       -  name: pcconta
+       -  name: pcgrupo

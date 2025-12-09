@@ -1,0 +1,13 @@
+SELECT 
+    RECNUM, 
+    CODFORNEC, 
+    DTLANC, 
+    DTVENC, 
+    VALOR, 
+    VPAGO, 
+    TIPOLANC 
+FROM {{ source('cedep', 'pclanc')}} 
+WHERE DTVENC BETWEEN 
+      TRUNC(SYSDATE) + 1 
+  AND DATE '2100-12-31'
+  AND DTPAGTO IS NULL

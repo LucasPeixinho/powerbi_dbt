@@ -1,0 +1,153 @@
+version: 2
+
+models:
+  - name: stg_clientes
+    description: "Tabela de clientes"
+    columns:
+      - name: CODCLI
+        description: "Código do cliente"
+        data_tests:
+          - unique
+          - not_null
+      - name: CLIENTE
+        description: "Nome do cliente"
+
+  - name: stg_cobranca
+    description: "Tabela de tipos de cobranças"
+    columns:
+      - name: CODCOB
+        description: "Código de cobrança"
+        data_tests:
+          - unique
+          - not_null
+      - name: COBRANCA
+        description: "Tipo de cobrança"
+
+  - name: stg_filiais
+    description: "Tabela de filiais"
+    columns:
+      - name: CODIGO
+        description: "Código da filial"
+        data_tests:
+          - unique
+          - not_null
+      - name: RAZAOSOCIAL
+        description: "Razão social da filial"
+      - name: ENDERECO
+        description: "Endereço da filial"
+      - name: CIDADE
+        description: "Cidade da filial"
+
+  - name: stg_supervisores
+    description: "Tabela de supervisores"
+    columns:
+      - name: CODSUPERVISOR
+        description: "Código de supervisor"
+        data_tests:
+          - unique
+          - not_null
+      - name: NOME
+        description: "Nome do supervisor"
+
+  - name: stg_vendedores
+    description: "Tabela de vendedores"
+    columns:
+      - name: CODUSUR
+        description: "Código de vendedor"
+        data_tests:
+          - unique
+          - not_null
+      - name: NOME
+        description: "Nome do vendedor"
+      - name: CODSUPERVISOR
+        description: "Código do supervisor do vendedor"
+
+  - name: stg_lanc_futuros
+    description: "Tabela de lançamentos financeiros"
+    columns:
+      - name: RECNUM
+        description: "Identificador único do lançamento (ID)"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: CODFORNEC
+        description: "Código do fornecedor"
+
+      - name: DTLANC
+        description: "Data de lançamento do registro"
+
+      - name: DTVENC
+        description: "Data de vencimento"
+
+      - name: VALOR
+        description: "Valor original do lançamento"
+
+      - name: TIPOLANC
+        description: "Tipo do lançamento"
+
+  - name: stg_fornecedores
+    description: "Tabela de cadastro de fornecedores"
+    columns:
+      - name: CODFORNEC
+        description: "Identificador único do fornecedor (ID)"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: FORNECEDOR
+        description: "Nome do fornecedor"
+
+      - name: REVENDA
+        description: "identifica se é fornecedor de revenda ou não"
+
+  - name: stg_contasareceber
+    description: "Lançamentos de contas/prestações a receber"
+    columns:
+      - name: CODFILIAL
+        description: "Código das filais"
+
+      - name: CODCLI
+        description: "Código de identificação de clientes"
+
+      - name: CODCOB
+        description: "Código de identificação de cobrança"
+
+      - name: CODUSUR
+        description: "Código de identificação de vendedor"
+
+      - name: PREST
+        description: "Número da prestação do lançamento"
+
+      - name: DUPLIC
+        description: "Número da nota/duplicata"
+
+      - name: DTVENC
+        description: "Data de vencimento do lançamento"
+
+      - name: DTPAG
+        description: "Data de pagamento"
+
+      - name: DTEMISSAO
+        description: "Data de emissão"
+
+      - name: VALOR
+        description: "Valor do lançamento"
+
+      - name: VPAGO
+        description: "Valor efetivamente pago"
+  - name: stg_rateio_centro_custo
+    description: Tabela de rateio de centro de custo dos lançamentos
+    columns:
+      - name: recnum
+        description: Código de identificação de lançamento
+        data_type: number
+      - name: codigocentrocusto
+        description: Código do centro de custo
+        data_type: varchar2
+      - name: percrateio
+        description: Percentual de rateio por centro de custo
+        data_type: number
+      - name: valor
+        description: Valor
+        data_type: number

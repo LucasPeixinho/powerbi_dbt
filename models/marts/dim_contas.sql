@@ -1,0 +1,9 @@
+SELECT 
+    CODCONTA,
+    CONTA,
+    GRUPOCONTA,
+    GRUPO
+FROM
+    {{ ref('int_contas') }}
+WHERE
+    GRUPOCONTA >= 200 AND GRUPOCONTA <= 900

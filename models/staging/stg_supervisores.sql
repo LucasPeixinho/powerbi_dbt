@@ -2,4 +2,4 @@ SELECT
     CODSUPERVISOR,
     NOME
 FROM
-    cedep.PCSUPERV
+    {{ source('cedep', 'pcsuperv')}} 

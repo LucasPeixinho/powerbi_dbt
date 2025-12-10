@@ -44,3 +44,9 @@ models:
 seeds:
   powerbi:
     +delimiter: ";"
+    seed_relacao_centro_custo:
+      +column_types:
+        N1_CODIGO: VARCHAR2(10)
+        N2_CODIGO: VARCHAR2(20)
+        N3_CODIGO: VARCHAR2(20)
+        CODFILIAL: VARCHAR2(10)

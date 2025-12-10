@@ -1,9 +1,24 @@
 SELECT 
-    CODCONTA,
-    CONTA,
-    GRUPOCONTA,
-    GRUPO
+    C.CODCONTA,
+    C.CONTA,
+    C.GRUPOCONTA,
+    CASE 
+        WHEN C.GRUPOCONTA LIKE '1%' THEN 100
+        WHEN C.GRUPOCONTA LIKE '2%' THEN 200
+        WHEN C.GRUPOCONTA LIKE '3%' THEN 300
+        WHEN C.GRUPOCONTA LIKE '4%' THEN 400
+        WHEN C.GRUPOCONTA LIKE '5%' THEN 500
+        WHEN C.GRUPOCONTA LIKE '6%' THEN 600
+        WHEN C.GRUPOCONTA LIKE '7%' THEN 700
+        WHEN C.GRUPOCONTA LIKE '8%' THEN 800
+        WHEN C.GRUPOCONTA LIKE '9%' THEN 900
+        ELSE NULL
+    END AS CODCONTAMASTER,
+    SC.CLASSIFICACAO   -- nova coluna incluída
 FROM
-    {{ ref('int_contas') }}
+    {{ ref('int_contas') }} C
+LEFT JOIN 
+    {{ ref('seed_classificacao_contas') }} SC
+        ON SC.CODCONTA = C.CODCONTA
 WHERE
-    GRUPOCONTA >= 200 AND GRUPOCONTA <= 900
+    C.GRUPOCONTA BETWEEN 200 AND 900

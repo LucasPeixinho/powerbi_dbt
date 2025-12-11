@@ -1,6 +1,7 @@
 SELECT
     CODFORNEC,
     FORNECEDOR,
-    REVENDA
+    REVENDA,
+    TIPOFORNEC
 FROM
     {{ source('cedep', 'pcfornec')}} 

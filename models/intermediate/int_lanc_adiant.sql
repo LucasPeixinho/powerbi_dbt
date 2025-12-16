@@ -1,5 +1,6 @@
 SELECT 
     BA.RECNUM,
+    LA.NUMNOTA,
     LA.CODCONTA,
     LA.CODFORNEC,
     LA.CODFILIAL,
@@ -8,8 +9,10 @@ SELECT
     LA.DTVENC,
     BA.DTPAGTO,
     LA.DTCOMPETENCIA,
+    LA.DUPLIC,
     ((BA.VPAGO + NVL(BA.VLVARIACAOCAMBIAL, 0)) * (-1)) AS VALOR,
-    ((BA.VPAGO + NVL(BA.VLVARIACAOCAMBIAL, 0)) * (-1)) AS VPAGO
+    ((BA.VPAGO + NVL(BA.VLVARIACAOCAMBIAL, 0)) * (-1)) AS VPAGO,
+    LA.TIPOLANC
 FROM {{ ref('stg_lanc_adiant') }} A
 JOIN {{ ref('stg_contasapagar') }} LA  -- ✅ USA a staging SEM filtro de data!
     ON A.RECNUMADIANTAMENTO = LA.RECNUM

@@ -1,7 +1,9 @@
 SELECT
-    CODIGO,
-    RAZAOSOCIAL,
-    ENDERECO,
-    CIDADE
+    codigo,
+    razaosocial,
+    endereco,
+    cidade
 FROM
-    {{ source('cedep', 'pcfilial')}} 
+    {{ source('cedep', 'pcfilial')}}
+WHERE
+    codigo <> '99'

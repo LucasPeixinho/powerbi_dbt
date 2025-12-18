@@ -1,7 +1,13 @@
 SELECT
-    CODIGO,
-    RAZAOSOCIAL,
-    ENDERECO,
-    CIDADE
+    codigo,
+    razaosocial,
+    endereco,
+    cidade,
+    CASE
+        WHEN codigo IN ( '2', '9', '10' ) THEN
+            'ATACADO'
+        ELSE
+            'VAREJO'
+    END AS tipo
 FROM
-    {{ ref('int_filiais')}} 
+    {{ ref('int_filiais')}}

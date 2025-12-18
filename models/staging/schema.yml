@@ -2,26 +2,50 @@ version: 2
 
 models:
   - name: stg_clientes
-    description: "Tabela de clientes"
+    description: "Tabela de staging contendo dados de cadastro dos clientes. Origem: PCCLIENT do WINTHOR (servidor de produção)"
     columns:
       - name: CODCLI
-        description: "Código do cliente"
+        description: "Identificador único do cliente no ERP (primary key da PCCLIENT)"
         data_tests:
           - unique
           - not_null
+        data_type: number
       - name: CLIENTE
-        description: "Nome do cliente"
+        description: "Nome do cliente cadastrado no ERP."
+        data_type: varchar2
+        data_tests:
+          - not_null
+      - name: dtprimcompra
+        description: Informação da data de primeira compra realizada pelo cliente.
+        data_type: date
+        tests:
+          - not_null
+      - name: inicioativ
+        description: Informação da data em que o cliente iniciou suas atividades.
+        data_type: date
+        tests:
+          - not_null
+      - name: bairrocom
+        description: Informação de bairro cadastrado do cliente, porém é um campo utilizado pelos usuários para informar se o cliente tem alguma exceção relacionada à crédito.
+        data_type: varchar2
+      - name: tipofj
+        description: Identifica se o cliente é pessa física ou jurídica.
+        data_type: varchar2
 
   - name: stg_cobranca
-    description: "Tabela de tipos de cobranças"
+    description: "Tabela de staging contendo dados de tipo de cobranças/pagamentos cadastrados. Origem: PCCOB do WINTHOR (servidor de produção)."
     columns:
       - name: CODCOB
-        description: "Código de cobrança"
+        description: "Identificador único de cada tipo de cobrança (primary key da tabela PCCOB)."
         data_tests:
           - unique
           - not_null
+        data_type: varchar2
       - name: COBRANCA
-        description: "Tipo de cobrança"
+        description: "Descriçao/nome do tipo de cobrança."
+        data_type: varchar2
+        data_tests:
+          - not_null
 
   - name: stg_filiais
     description: "Tabela de filiais"
@@ -151,3 +175,28 @@ models:
       - name: valor
         description: Valor
         data_type: number
+  - name: stg_contas
+    description: "Tabela de staging contendo dados de cadastro dos contas financeiras. Origem: PCCONTA do WINTHOR (servidor de produção)"
+    columns:
+      - name: codconta
+        description: Identificador único de cada conta cadastrada (primary key da tabela PCCONTA).
+        data_type: number
+        data_tests:
+          - not_null
+          - unique
+      - name: conta
+        description: Descrição da conta financeira para identificação de pagamentos.
+        data_type: varchar2
+        data_tests:
+          - not_null
+      - name: grupoconta
+        description: Identificação de qual grupo de contas pertence a conta.
+        data_type: number
+        data_tests:
+          - not_null
+      - name: codcontamaster
+        description: Identificação de qual grupo de contas master pertence a conta.
+        data_type: number
+      - name: tipo
+        description: Tipo de conta
+        data_type: varchar2

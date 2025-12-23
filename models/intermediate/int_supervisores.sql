@@ -1,6 +1,13 @@
-SELECT
-    CODSUPERVISOR,
-    NOME,
-    CODSUPERVISOR || ' - ' || NOME as NOME_SUPERVISOR
-FROM
-    {{ ref('stg_supervisores')}} 
+with supervisores as (
+    select * from {{ ref('stg_supervisores') }}
+),
+
+final as (
+    select
+        id_supervisor,
+        nome_supervisor,
+        id_supervisor || ' - ' || nome_supervisor as supervisor
+    from supervisores
+)
+
+select * from final

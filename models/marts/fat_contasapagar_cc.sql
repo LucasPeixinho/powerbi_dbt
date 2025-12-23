@@ -1,24 +1,44 @@
-SELECT 
-    LB.RECNUM,
-    LB.NUMNOTA,
-    LB.CODCONTA,
-    LB.CODFORNEC,
-    LB.CODFILIAL,
-    LB.DTEMISSAO,
-    LB.DTLANC,
-    LB.DTVENC,
-    LB.DTPAGTO,
-    LB.DTCOMPETENCIA,
-    LB.VALOR,
-    LB.VPAGO,
-    NVL(CC.CODIGOCENTROCUSTO, '99.999') AS CODIGOCENTROCUSTO,
-    NVL(CC.PERCRATEIO, 100) AS PERCRATEIO,
-    NVL(CC.VALOR, LB.VALOR) AS VALOR_RATEADO_CC,
-    (LB.VALOR * NVL(CC.PERCRATEIO, 100) / 100) AS VALOR_RATEADO_CALC,
-    (LB.VPAGO * NVL(CC.PERCRATEIO, 100) / 100) AS VPAGO_RATEADO_CALC,
-    LB.TIPOLANC
-FROM {{ ref('int_contasapagar') }} LB
-LEFT JOIN {{ ref('stg_rateio_centro_custo') }} CC 
-    ON LB.RECNUM = CC.RECNUM
-WHERE {{ filtro_periodo('LB.DTLANC') }}    
-ORDER BY LB.RECNUM, CC.CODIGOCENTROCUSTO
+with contasapagar as (
+    select * from {{ ref('int_contasapagar') }}
+),
+
+centrocusto as (
+    select * from {{ ref('int_rateio_centro_custo') }}
+),
+
+contas as (
+    select * from {{ ref('dim_contas') }}
+),
+
+final as (
+    select
+        c.id_lancamento,
+        c.numero_nota,
+        c.id_conta,
+        g.id_grupo_conta,
+        c.id_fornecedor,
+        c.id_filial,
+        c.data_emissao,
+        c.data_lancamento,
+        c.data_vencimento,
+        c.data_pagamento,
+        c.data_competencia,
+        c.duplicata,
+        --c.valor_original,
+        --c.valor_pago,
+        coalesce(cc.id_centro_custo, '99.999') as id_centro_custo,
+        coalesce(cc.percentual_rateio, 100) as percentual_rateio,
+        (c.valor_original * coalesce(cc.percentual_rateio, 100) / 100) as valor_original,
+        (c.valor_pago * coalesce(cc.percentual_rateio, 100) / 100) as valor_pago,
+        c.tipo_lancamento
+    from contasapagar c
+    left join centrocusto cc
+        on c.id_lancamento = cc.id_lancamento
+    left join contas g
+        on g.id_conta = c.id_conta
+    where {{ filtro_periodo('c.data_lancamento') }}
+    and id_grupo_conta between '200' and '900'
+    order by c.id_lancamento, cc.id_centro_custo
+)
+
+select * from final

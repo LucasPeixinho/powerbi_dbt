@@ -1,55 +1,643 @@
+version: 2
+
 models:
   - name: int_clientes
-    description: Tabela de clientes com datas tratadas.
+    description: "Camada intermediate de clientes com validações e tratamentos de dados"
     columns:
-      - name: codcli
-        description: Código do cliente
+      - name: id_cliente
+        description: "Identificador único do cliente"
+        data_tests:
+          - unique
+          - not_null
         data_type: number
-      - name: cliente
-        description: Nome do cliente
+
+      - name: nome_cliente
+        description: "Nome do cliente"
         data_type: varchar2
-      - name: dtprimcompra_tratada
-        description: Data de primeira compra (valores null substituídos por 01/01/1900)
-        data_type: date
-      - name: inicioativ_tratada
-        description: Data de início de atividade (valores null substituídos por 01/01/1900
-        data_type: date
-      - name: bairrocom
-        description: Coluna para verificação se cliente é exceção de crédito
-        data_type: varchar2
-      - name: tipofj
-        description: Tipo de pessoa (Física ou Jurídica)
-        data_type: varchar2
-  - name: int_vendedores
-    description: Tabela de vendedores
-    columns:
-      - name: codusur
-        description: Código/RCA de vendedor
-        data_type: number
         data_tests:
           - not_null
-          - unique
-      - name: nome
-        description: Nome do vendedor
-        data_type: varchar2
-      - name: codsupervisor
-        description: Código do supervisor
-        data_type: number
-      - name: nome_vendedor
-        description: Nome do vendedor com o código/RCA
-        data_type: varchar2
-  - name: int_fornecedores
-    description: Tabela de fornecedores
-    columns:
-      - name: codfornec
-        description: Código de fornecedor
-        data_type: number
+
+      - name: data_primeira_compra
+        description: "Data da primeira compra com tratamento de valores inválidos (retorna 01/01/1900 se nulo ou fora do range válido)"
+        data_type: date
         data_tests:
           - not_null
-          - unique
-      - name: fornecedor
-        description: Nome do fornecedor
+
+      - name: data_inicio_atividade
+        description: "Data de início de atividade com tratamento de valores inválidos (retorna 01/01/1900 se nulo ou fora do range válido)"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: info_extra
+        description: "Informações extras sobre o cliente (usado para observações de crédito)"
         data_type: varchar2
+
       - name: tipo_cliente
-        description: Tipo de fornecedor
+        description: "Tipo do cliente traduzido (Física ou Jurídica)"
         data_type: varchar2
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['Física', 'Jurídica']
+
+  - name: int_cobrancas
+    description: "Camada intermediate de formas de cobrança"
+    columns:
+      - name: id_cobranca
+        description: "Identificador único da forma de cobrança"
+        data_tests:
+          - unique
+          - not_null
+        data_type: varchar2
+
+      - name: nome_cobranca
+        description: "Nome da forma de cobrança"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: int_contas
+    description: "Camada intermediate do plano de contas com enriquecimento do grupo de contas"
+    columns:
+      - name: id_conta
+        description: "Identificador único da conta"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_conta
+        description: "Descrição da conta"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: id_grupo_conta
+        description: "Código do grupo de contas"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_grupoconta')
+              field: id_grupo_conta
+
+      - name: id_conta_master
+        description: "Código da conta master"
+        data_type: number
+
+      - name: nome_grupo_conta
+        description: "Nome do grupo de contas (enriquecido via join)"
+        data_type: varchar2
+
+  - name: int_contasapagar
+    description: "Camada intermediate de contas a pagar consolidando lançamentos normais e adiantamentos"
+    columns:
+      - name: id_lancamento
+        description: "Identificador único do lançamento"
+        data_tests:
+          - not_null
+        data_type: number
+
+      - name: numero_nota
+        description: "Número da nota fiscal"
+        data_type: number
+
+      - name: id_conta
+        description: "Código da conta contábil"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_contas')
+              field: id_conta
+
+      - name: id_fornecedor
+        description: "Código do fornecedor"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_fornecedores')
+              field: id_fornecedor
+
+      - name: id_filial
+        description: "Código da filial"
+        data_type: varchar2
+        data_tests:
+          - relationships:
+              to: ref('int_filiais')
+              field: id_filial
+
+      - name: data_emissao
+        description: "Data de emissão do documento"
+        data_type: date
+
+      - name: data_lancamento
+        description: "Data do lançamento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_vencimento
+        description: "Data de vencimento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_pagamento
+        description: "Data efetiva do pagamento"
+        data_type: date
+
+      - name: data_competencia
+        description: "Data de competência contábil"
+        data_type: date
+
+      - name: duplicata
+        description: "Número da duplicata"
+        data_type: varchar2
+
+      - name: valor_original
+        description: "Valor original do lançamento"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: valor_pago
+        description: "Valor efetivamente pago"
+        data_type: number
+
+      - name: tipo_lancamento
+        description: "Tipo do lançamento"
+        data_type: varchar2
+
+  - name: int_contasareceber
+    description: "Camada intermediate de contas a receber"
+    columns:
+      - name: id_filial
+        description: "Código da filial"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_filiais')
+              field: id_filial
+
+      - name: id_cliente
+        description: "Código do cliente"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_clientes')
+              field: id_cliente
+
+      - name: id_cobranca
+        description: "Código da forma de cobrança"
+        data_type: varchar2
+        data_tests:
+          - relationships:
+              to: ref('int_cobrancas')
+              field: id_cobranca
+
+      - name: id_cobranca_original
+        description: "Código da forma de cobrança original"
+        data_type: varchar2
+
+      - name: id_vendedor
+        description: "Código do vendedor"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_vendedores')
+              field: id_vendedor
+
+      - name: numero_prestacao
+        description: "Número da prestação"
+        data_type: varchar2
+
+      - name: numero_duplicata
+        description: "Número da duplicata"
+        data_type: number
+
+      - name: data_vencimento
+        description: "Data de vencimento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_pagamento
+        description: "Data efetiva do pagamento"
+        data_type: date
+
+      - name: data_emissao
+        description: "Data de emissão"
+        data_type: date
+
+      - name: valor_original
+        description: "Valor original da prestação"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: valor_pago
+        description: "Valor efetivamente pago"
+        data_type: number
+
+  - name: int_filiais
+    description: "Camada intermediate de filiais"
+    columns:
+      - name: id_filial
+        description: "Código identificador da filial"
+        data_tests:
+          - unique
+          - not_null
+        data_type: varchar2
+
+      - name: razao_social_filial
+        description: "Razão social da filial"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: endereco_filial
+        description: "Endereço da filial"
+        data_type: varchar2
+
+      - name: cidade_filial
+        description: "Cidade da filial"
+        data_type: varchar2
+
+  - name: int_fornecedores
+    description: "Camada intermediate de fornecedores com decodificação de tipos e finalidades"
+    columns:
+      - name: id_fornecedor
+        description: "Identificador único do fornecedor"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_fornecedor
+        description: "Nome do fornecedor"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: finalidade_fornecedor
+        description: "Finalidade do fornecedor traduzida (Transportadora, Beneficiamento, Comunicação, etc)"
+        data_type: varchar2
+        data_tests:
+          - accepted_values:
+              values: ['Transportadora', 'Beneficiamento', 'Comunicação', 'Consumo', 'Revenda', 'Energia', 'Exportador', 'Não Revenda', 'Profissional liberal', 'Desconhecido']
+
+      - name: tipo_fornecedor
+        description: "Tipo do fornecedor traduzido (Central de distribuição, Comércio atacadista, etc)"
+        data_type: varchar2
+        data_tests:
+          - accepted_values:
+              values: ['Central de distribuição', 'Comércio atacadista', 'Varejista', 'Filial', 'Indústria', 'Outras']
+
+      - name: uf_fornecedor
+        description: "Unidade federativa do fornecedor"
+        data_type: varchar2
+
+      - name: cidade_fornecedor
+        description: "Cidade do fornecedor"
+        data_type: varchar2
+
+      - name: status_bloqueio
+        description: "Status de bloqueio do fornecedor (Bloqueado ou Ativo)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['Bloqueado', 'Ativo']
+
+      - name: data_cadastro
+        description: "Data de cadastro do fornecedor"
+        data_type: date
+
+  - name: int_grupoconta
+    description: "Camada intermediate de grupos de contas"
+    columns:
+      - name: id_grupo_conta
+        description: "Identificador único do grupo de contas"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_grupo_conta
+        description: "Nome do grupo de contas"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: int_lanc_adiant
+    description: "Camada intermediate de lançamentos de adiantamento a fornecedores processados"
+    columns:
+      - name: id_lancamento
+        description: "Identificador único do lançamento"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: numero_nota
+        description: "Número da nota fiscal"
+        data_type: number
+
+      - name: id_conta
+        description: "Código da conta contábil"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: id_fornecedor
+        description: "Código do fornecedor"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: id_filial
+        description: "Código da filial"
+        data_type: varchar2
+
+      - name: data_emissao
+        description: "Data de emissão"
+        data_type: date
+
+      - name: data_lancamento
+        description: "Data do lançamento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_vencimento
+        description: "Data de vencimento"
+        data_type: date
+
+      - name: data_pagamento
+        description: "Data do pagamento (não nulo por filtro no WHERE)"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_competencia
+        description: "Data de competência"
+        data_type: date
+
+      - name: duplicata
+        description: "Número da duplicata"
+        data_type: varchar2
+
+      - name: valor_original
+        description: "Valor original do adiantamento (invertido com sinal negativo)"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: valor_pago
+        description: "Valor pago do adiantamento (invertido com sinal negativo)"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: tipo_lancamento
+        description: "Tipo do lançamento"
+        data_type: varchar2
+
+  - name: int_produtos
+    description: "Camada intermediate de produtos enriquecida com departamento, seção e marca"
+    columns:
+      - name: id_produto
+        description: "Identificador único do produto"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: descricao_produto
+        description: "Descrição do produto"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: id_fornecedor
+        description: "Código do fornecedor principal"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_fornecedores')
+              field: id_fornecedor
+
+      - name: id_departamento
+        description: "Código do departamento"
+        data_type: number
+
+      - name: nome_departamento
+        description: "Nome do departamento (enriquecido via join)"
+        data_type: varchar2
+
+      - name: id_secao
+        description: "Código da seção"
+        data_type: number
+
+      - name: nome_secao
+        description: "Nome da seção (enriquecido via join)"
+        data_type: varchar2
+
+      - name: id_marca
+        description: "Código da marca"
+        data_type: number
+
+      - name: nome_marca
+        description: "Nome da marca (enriquecido via join)"
+        data_type: varchar2
+
+      - name: custo_reposicao
+        description: "Custo de reposição do produto"
+        data_type: number
+
+      - name: quantidade_por_caixa
+        description: "Quantidade de unidades por caixa"
+        data_type: number
+
+      - name: unidade_medida
+        description: "Unidade de medida do produto"
+        data_type: varchar2
+
+  - name: int_supervisores
+    description: "Camada intermediate de supervisores com campo concatenado"
+    columns:
+      - name: id_supervisor
+        description: "Identificador único do supervisor"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_supervisor
+        description: "Nome do supervisor"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: supervisor_completo
+        description: "Campo concatenado com código e nome do supervisor (formato: ID - NOME)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: int_vendedores
+    description: "Camada intermediate de vendedores com campo concatenado"
+    columns:
+      - name: id_vendedor
+        description: "Identificador único do vendedor"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_vendedor
+        description: "Nome do vendedor"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: id_supervisor
+        description: "Código do supervisor do vendedor"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_supervisores')
+              field: id_supervisor
+
+      - name: vendedor_completo
+        description: "Campo concatenado com código e nome do vendedor (formato: ID - NOME)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: int_vendas_detalhadas
+    description: "Camada intermediate de vendas detalhadas com todos os dados de movimentação, nota, produto e valores calculados"
+    columns:
+      - name: id_transacao_venda
+        description: "Identificador da transação de venda"
+        data_type: number
+
+      - name: id_produto
+        description: "Código do produto"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_produtos')
+              field: id_produto
+
+      - name: id_filial
+        description: "Código da filial"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('int_filiais')
+              field: id_filial
+
+      - name: data_movimento
+        description: "Data da movimentação"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: codigo_operacao
+        description: "Código da operação fiscal"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: id_fornecedor
+        description: "Código do fornecedor do produto"
+        data_type: number
+
+      - name: descricao_produto
+        description: "Descrição do produto"
+        data_type: varchar2
+
+      - name: id_departamento
+        description: "Código do departamento"
+        data_type: number
+
+      - name: id_secao
+        description: "Código da seção"
+        data_type: number
+
+      - name: id_marca
+        description: "Código da marca"
+        data_type: number
+
+      - name: id_cliente
+        description: "Código do cliente"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_clientes')
+              field: id_cliente
+
+      - name: id_vendedor
+        description: "Código do vendedor"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_vendedores')
+              field: id_vendedor
+
+      - name: id_supervisor
+        description: "Código do supervisor"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_supervisores')
+              field: id_supervisor
+
+      - name: quantidade
+        description: "Quantidade vendida"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: preco_unitario
+        description: "Preço unitário de venda"
+        data_type: number
+
+      - name: custo_unitario
+        description: "Custo unitário financeiro"
+        data_type: number
+
+      - name: receita_bruta
+        description: "Receita bruta da venda (quantidade * preço unitário)"
+        data_type: number
+
+      - name: custo_total
+        description: "Custo total da venda (quantidade * custo unitário)"
+        data_type: number
+
+      - name: valor_desconto
+        description: "Valor de desconto aplicado"
+        data_type: number
+
+      - name: valor_st
+        description: "Valor de substituição tributária"
+        data_type: number
+
+      - name: valor_ipi
+        description: "Valor de IPI"
+        data_type: number
+
+      - name: valor_frete_rateado
+        description: "Valor do frete rateado proporcionalmente ao item"
+        data_type: number
+
+      - name: valor_outras_despesas_rateado
+        description: "Valor de outras despesas rateadas proporcionalmente ao item"
+        data_type: number

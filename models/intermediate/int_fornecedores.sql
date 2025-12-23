@@ -1,25 +1,36 @@
-SELECT
-    CODFORNEC,
-    FORNECEDOR,
-    CASE REVENDA
-        WHEN 'T' THEN 'Transportadora'
-        WHEN 'B' THEN 'Beneficiamento'
-        WHEN 'C' THEN 'Comunicação'
-        WHEN 'O' THEN 'Consumo'
-        WHEN 'S' THEN 'Revenda'
-        WHEN 'E' THEN 'Energia'
-        WHEN 'X' THEN 'Exportador'
-        WHEN 'N' THEN 'Não Revenda'
-        WHEN 'P' THEN 'Profissional liberal'
-        ELSE 'Desconhecido'
-    END AS REVENDA,
-    CASE TIPOFORNEC
-        WHEN 'D' THEN 'Central de distribuição'
-        WHEN 'C' THEN 'Comércio atacadista'
-        WHEN 'V' THEN 'Varejista'
-        WHEN 'F' THEN 'Filial'
-        WHEN 'I' THEN 'Indústria'
-        WHEN 'O' THEN 'Outras'
-    END AS TIPOFORNEC
-FROM
-    {{ ref('stg_fornecedores') }} 
+with fornecedores as (
+    select * from {{ ref('stg_fornecedores') }}
+),
+
+renamed as (
+    select
+        id_fornecedor,
+        nome_fornecedor,
+        case finalidade_fornecedor
+            when 'T' then 'Transportadora'
+            when 'B' then 'Beneficiamento'
+            when 'C' then 'Comunicação'
+            when 'O' then 'Consumo'
+            when 'S' then 'Revenda'
+            when 'E' then 'Energia'
+            when 'X' then 'Exportador'
+            when 'N' then 'Não Revenda'
+            when 'P' then 'Profissional liberal'
+            ELSE 'Desconhecido'
+        end as finalidade_fornecedor,
+        case tipo_fornecedor
+            when 'D' then 'Central de distribuição'
+            when 'C' then 'Comércio atacadista'
+            when 'V' then 'Varejista'
+            when 'F' then 'Filial'
+            when 'I' then 'Indústria'
+            when 'O' then 'Outras'
+        end as tipo_fornecedor,
+        uf_fornecedor,
+        cidade_fornecedor,
+        case when status_bloqueio = 'S' then 'Bloqueado' else 'Ativo' end as status_bloqueio,
+        data_cadastro
+    from fornecedores
+)
+
+select * from renamed

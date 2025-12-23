@@ -16,3 +16,10 @@ sources:
        -  name: pcrateiocentrocusto
        -  name: pcconta
        -  name: pcgrupo
+       -  name: pcmov
+       -  name: pcnfsaid
+       -  name: pcnfent
+       -  name: pcprodut
+       -  name: pcdepto
+       -  name: pcsecao
+       -  name: pcmarca

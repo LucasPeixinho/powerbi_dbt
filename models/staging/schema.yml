@@ -2,201 +2,762 @@ version: 2
 
 models:
   - name: stg_clientes
-    description: "Tabela de staging contendo dados de cadastro dos clientes. Origem: PCCLIENT do WINTHOR (servidor de produção)"
+    description: "Tabela de staging contendo dados de cadastro dos clientes. Origem: PCCLIENT do WINTHOR"
     columns:
-      - name: CODCLI
-        description: "Identificador único do cliente no ERP (primary key da PCCLIENT)"
+      - name: id_cliente
+        description: "Identificador único do cliente no ERP (primary key)"
         data_tests:
           - unique
           - not_null
         data_type: number
-      - name: CLIENTE
-        description: "Nome do cliente cadastrado no ERP."
+      
+      - name: nome_cliente
+        description: "Nome do cliente cadastrado no ERP"
         data_type: varchar2
         data_tests:
           - not_null
-      - name: dtprimcompra
-        description: Informação da data de primeira compra realizada pelo cliente.
+      
+      - name: data_primeira_compra
+        description: "Data da primeira compra realizada pelo cliente"
         data_type: date
-        tests:
-          - not_null
-      - name: inicioativ
-        description: Informação da data em que o cliente iniciou suas atividades.
+      
+      - name: data_inicio_atividade
+        description: "Data em que o cliente iniciou suas atividades"
         data_type: date
-        tests:
-          - not_null
-      - name: bairrocom
-        description: Informação de bairro cadastrado do cliente, porém é um campo utilizado pelos usuários para informar se o cliente tem alguma exceção relacionada à crédito.
+      
+      - name: info_extra
+        description: "Campo utilizado para informar exceções relacionadas a crédito"
         data_type: varchar2
-      - name: tipofj
-        description: Identifica se o cliente é pessa física ou jurídica.
+      
+      - name: tipo_cliente
+        description: "Identifica se o cliente é pessoa física (F) ou jurídica (J)"
         data_type: varchar2
 
-  - name: stg_cobranca
-    description: "Tabela de staging contendo dados de tipo de cobranças/pagamentos cadastrados. Origem: PCCOB do WINTHOR (servidor de produção)."
+  - name: stg_cobrancas
+    description: "Tabela de staging contendo tipos de cobranças/formas de pagamento. Origem: PCCOB do WINTHOR"
     columns:
-      - name: CODCOB
-        description: "Identificador único de cada tipo de cobrança (primary key da tabela PCCOB)."
+      - name: id_cobranca
+        description: "Identificador único de cada tipo de cobrança (primary key)"
         data_tests:
           - unique
           - not_null
         data_type: varchar2
-      - name: COBRANCA
-        description: "Descriçao/nome do tipo de cobrança."
+      
+      - name: nome_cobranca
+        description: "Descrição/nome do tipo de cobrança"
         data_type: varchar2
         data_tests:
           - not_null
 
   - name: stg_filiais
-    description: "Tabela de filiais"
+    description: "Tabela de staging contendo dados das filiais. Origem: PCFILIAL do WINTHOR"
     columns:
-      - name: CODIGO
-        description: "Código da filial"
+      - name: id_filial
+        description: "Código identificador da filial (primary key)"
         data_tests:
           - unique
           - not_null
-      - name: RAZAOSOCIAL
+        data_type: varchar2
+      
+      - name: razao_social_filial
         description: "Razão social da filial"
-      - name: ENDERECO
-        description: "Endereço da filial"
-      - name: CIDADE
-        description: "Cidade da filial"
+        data_type: varchar2
+        data_tests:
+          - not_null
+      
+      - name: endereco_filial
+        description: "Endereço completo da filial"
+        data_type: varchar2
+      
+      - name: cidade_filial
+        description: "Cidade onde a filial está localizada"
+        data_type: varchar2
 
   - name: stg_supervisores
-    description: "Tabela de supervisores"
+    description: "Tabela de staging contendo dados dos supervisores. Origem: PCSUPERV do WINTHOR"
     columns:
-      - name: CODSUPERVISOR
-        description: "Código de supervisor"
+      - name: id_supervisor
+        description: "Código identificador do supervisor (primary key)"
         data_tests:
           - unique
           - not_null
-      - name: NOME
-        description: "Nome do supervisor"
+        data_type: number
+      
+      - name: nome_supervisor
+        description: "Nome completo do supervisor"
+        data_type: varchar2
+        data_tests:
+          - not_null
 
   - name: stg_vendedores
-    description: "Tabela de vendedores"
+    description: "Tabela de staging contendo dados dos vendedores. Origem: PCUSUARI do WINTHOR"
     columns:
-      - name: CODUSUR
-        description: "Código de vendedor"
+      - name: id_vendedor
+        description: "Código identificador do vendedor (primary key)"
         data_tests:
           - unique
           - not_null
-      - name: NOME
-        description: "Nome do vendedor"
-      - name: CODSUPERVISOR
-        description: "Código do supervisor do vendedor"
-
-  - name: stg_lanc_futuros
-    description: "Tabela de lançamentos financeiros"
-    columns:
-      - name: RECNUM
-        description: "Identificador único do lançamento (ID)"
+        data_type: number
+      
+      - name: nome_vendedor
+        description: "Nome completo do vendedor"
+        data_type: varchar2
         data_tests:
-          - unique
           - not_null
-
-      - name: CODFORNEC
-        description: "Código do fornecedor"
-
-      - name: DTLANC
-        description: "Data de lançamento do registro"
-
-      - name: DTVENC
-        description: "Data de vencimento"
-
-      - name: VALOR
-        description: "Valor original do lançamento"
-
-      - name: TIPOLANC
-        description: "Tipo do lançamento"
+      
+      - name: id_supervisor
+        description: "Código do supervisor responsável pelo vendedor (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_supervisores')
+              field: id_supervisor
 
   - name: stg_fornecedores
-    description: "Tabela de cadastro de fornecedores"
+    description: "Tabela de staging contendo cadastro de fornecedores. Origem: PCFORNEC do WINTHOR"
     columns:
-      - name: CODFORNEC
-        description: "Identificador único do fornecedor (ID)"
+      - name: id_fornecedor
+        description: "Identificador único do fornecedor (primary key)"
         data_tests:
           - unique
           - not_null
+        data_type: number
+      
+      - name: nome_fornecedor
+        description: "Nome ou razão social do fornecedor"
+        data_type: varchar2
+        data_tests:
+          - not_null
+      
+      - name: finalidade_fornecedor
+        description: "Identifica se é fornecedor de revenda (S/N)"
+        data_type: varchar2
+      
+      - name: tipo_fornecedor
+        description: "Tipo/categoria do fornecedor"
+        data_type: varchar2
+      
+      - name: uf_fornecedor
+        description: "Unidade federativa (estado) do fornecedor"
+        data_type: varchar2
+      
+      - name: cidade_fornecedor
+        description: "Cidade do fornecedor"
+        data_type: varchar2
+      
+      - name: status_bloqueio
+        description: "Indica se o fornecedor está bloqueado (S/N)"
+        data_type: varchar2
+      
+      - name: data_cadastro
+        description: "Data de cadastro do fornecedor no sistema"
+        data_type: date
 
-      - name: FORNECEDOR
-        description: "Nome do fornecedor"
-
-      - name: REVENDA
-        description: "identifica se é fornecedor de revenda ou não"
+  - name: stg_contasapagar
+    description: "Tabela de staging contendo lançamentos de contas a pagar. Origem: PCLANC do WINTHOR"
+    columns:
+      - name: id_lancamento
+        description: "Identificador único do lançamento (primary key)"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+      
+      - name: numero_nota
+        description: "Número da nota fiscal associada ao lançamento"
+        data_type: number
+      
+      - name: id_conta
+        description: "Código da conta contábil (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_contas')
+              field: id_conta
+      
+      - name: id_fornecedor
+        description: "Código do fornecedor (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_fornecedores')
+              field: id_fornecedor
+      
+      - name: id_filial
+        description: "Código da filial (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - relationships:
+              to: ref('stg_filiais')
+              field: id_filial
+      
+      - name: data_emissao
+        description: "Data de emissão do documento"
+        data_type: date
+      
+      - name: data_lancamento
+        description: "Data do lançamento contábil"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: data_vencimento
+        description: "Data de vencimento da obrigação"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: data_pagamento
+        description: "Data efetiva do pagamento"
+        data_type: date
+      
+      - name: data_estorno_baixa
+        description: "Data de estorno da baixa, se houver"
+        data_type: date
+      
+      - name: data_competencia
+        description: "Data de competência contábil"
+        data_type: date
+      
+      - name: duplicata
+        description: "Número da duplicata"
+        data_type: varchar2
+      
+      - name: valor_original
+        description: "Valor original do lançamento"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: valor_pago
+        description: "Valor efetivamente pago"
+        data_type: number
+      
+      - name: valor_variacao_cambial
+        description: "Valor de variação cambial, se aplicável"
+        data_type: number
+      
+      - name: tipo_lancamento
+        description: "Tipo do lançamento (classificação)"
+        data_type: varchar2
 
   - name: stg_contasareceber
-    description: "Lançamentos de contas/prestações a receber"
+    description: "Tabela de staging contendo lançamentos de contas/prestações a receber. Origem: PCPREST do WINTHOR"
     columns:
-      - name: CODFILIAL
-        description: "Código das filais"
-
-      - name: CODCLI
-        description: "Código de identificação de clientes"
-
-      - name: CODCOB
-        description: "Código de identificação de cobrança"
-
-      - name: CODUSUR
-        description: "Código de identificação de vendedor"
-
-      - name: PREST
-        description: "Número da prestação do lançamento"
-
-      - name: DUPLIC
-        description: "Número da nota/duplicata"
-
-      - name: DTVENC
-        description: "Data de vencimento do lançamento"
-
-      - name: DTPAG
-        description: "Data de pagamento"
-
-      - name: DTEMISSAO
-        description: "Data de emissão"
-
-      - name: VALOR
-        description: "Valor do lançamento"
-
-      - name: VPAGO
+      - name: id_filial
+        description: "Código da filial (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_filiais')
+              field: id_filial
+      
+      - name: id_cliente
+        description: "Código do cliente (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_clientes')
+              field: id_cliente
+      
+      - name: id_cobranca
+        description: "Código da forma de cobrança (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - relationships:
+              to: ref('stg_cobrancas')
+              field: id_cobranca
+      
+      - name: id_cobranca_original
+        description: "Código da forma de cobrança original, antes de alterações"
+        data_type: varchar2
+      
+      - name: id_vendedor
+        description: "Código do vendedor (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_vendedores')
+              field: id_vendedor
+      
+      - name: numero_prestacao
+        description: "Número da prestação/parcela"
+        data_type: varchar2
+      
+      - name: numero_duplicata
+        description: "Número da duplicata/nota fiscal"
+        data_type: number
+      
+      - name: data_vencimento
+        description: "Data de vencimento da prestação"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: data_pagamento
+        description: "Data efetiva do pagamento"
+        data_type: date
+      
+      - name: data_emissao
+        description: "Data de emissão do título"
+        data_type: date
+      
+      - name: valor_original
+        description: "Valor original da prestação"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: valor_pago
         description: "Valor efetivamente pago"
+        data_type: number
+
   - name: stg_rateio_centro_custo
-    description: Tabela de rateio de centro de custo dos lançamentos
+    description: "Tabela de staging contendo rateio de centro de custo dos lançamentos. Origem: PCRATEIOCENTROCUSTO do WINTHOR"
     columns:
-      - name: recnum
-        description: Código de identificação de lançamento
+      - name: id_lancamento
+        description: "Código do lançamento relacionado (foreign key)"
         data_type: number
-      - name: codigocentrocusto
-        description: Código do centro de custo
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_contasapagar')
+              field: id_lancamento
+      
+      - name: id_centro_custo
+        description: "Código do centro de custo"
         data_type: varchar2
-      - name: percrateio
-        description: Percentual de rateio por centro de custo
+        data_tests:
+          - not_null
+      
+      - name: percentual_rateio
+        description: "Percentual de rateio aplicado ao centro de custo"
         data_type: number
+        data_tests:
+          - not_null
+      
       - name: valor
-        description: Valor
-        data_type: number
-  - name: stg_contas
-    description: "Tabela de staging contendo dados de cadastro dos contas financeiras. Origem: PCCONTA do WINTHOR (servidor de produção)"
-    columns:
-      - name: codconta
-        description: Identificador único de cada conta cadastrada (primary key da tabela PCCONTA).
+        description: "Valor rateado para o centro de custo"
         data_type: number
         data_tests:
           - not_null
+
+  - name: stg_contas
+    description: "Tabela de staging contendo plano de contas financeiras. Origem: PCCONTA do WINTHOR"
+    columns:
+      - name: id_conta
+        description: "Identificador único de cada conta (primary key)"
+        data_type: number
+        data_tests:
           - unique
-      - name: conta
-        description: Descrição da conta financeira para identificação de pagamentos.
+          - not_null
+      
+      - name: nome_conta
+        description: "Descrição da conta financeira"
         data_type: varchar2
         data_tests:
           - not_null
-      - name: grupoconta
-        description: Identificação de qual grupo de contas pertence a conta.
+      
+      - name: id_grupo_conta
+        description: "Código do grupo de contas (foreign key)"
         data_type: number
         data_tests:
           - not_null
-      - name: codcontamaster
-        description: Identificação de qual grupo de contas master pertence a conta.
+          - relationships:
+              to: ref('stg_grupoconta')
+              field: id_grupo_conta
+      
+      - name: id_conta_master
+        description: "Código da conta master para agrupamento"
         data_type: number
-      - name: tipo
-        description: Tipo de conta
+      
+      - name: tipo_conta
+        description: "Tipo/classificação da conta"
+        data_type: varchar2
+
+  - name: stg_grupoconta
+    description: "Tabela de staging contendo grupos de contas. Origem: PCGRUPO do WINTHOR"
+    columns:
+      - name: id_grupo_conta
+        description: "Identificador único do grupo de contas (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: nome_grupo_conta
+        description: "Descrição do grupo de contas"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: stg_lanc_adiant
+    description: "Tabela de staging contendo lançamentos de adiantamento a fornecedores. Origem: PCLANCADIANTFORNEC do WINTHOR"
+    columns:
+      - name: id_lancamento_adiantamento
+        description: "Identificador único do lançamento de adiantamento (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: id_lancamento_pagamento
+        description: "Identificador do lançamento de pagamento relacionado"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: valor_original
+        description: "Valor do adiantamento"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: data_lancamento
+        description: "Data do lançamento do adiantamento"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: data_estorno
+        description: "Data de estorno do adiantamento (null se não estornado)"
+        data_type: date
+
+  - name: stg_produtos
+    description: "Tabela de staging contendo cadastro de produtos. Origem: PCPRODUT do WINTHOR"
+    columns:
+      - name: id_produto
+        description: "Identificador único do produto (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: id_fornecedor
+        description: "Código do fornecedor principal (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_fornecedores')
+              field: id_fornecedor
+      
+      - name: descricao_produto
+        description: "Descrição completa do produto"
+        data_type: varchar2
+        data_tests:
+          - not_null
+      
+      - name: id_departamento
+        description: "Código do departamento (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_departamento')
+              field: id_departamento
+      
+      - name: id_secao
+        description: "Código da seção (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_secao')
+              field: id_secao
+      
+      - name: id_marca
+        description: "Código da marca (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_marca')
+              field: id_marca
+      
+      - name: custo_reposicao
+        description: "Custo de reposição do produto"
+        data_type: number
+      
+      - name: quantidade_por_caixa
+        description: "Quantidade de unidades por caixa"
+        data_type: number
+      
+      - name: unidade_medida
+        description: "Unidade de medida do produto (UN, KG, etc)"
+        data_type: varchar2
+
+  - name: stg_departamento
+    description: "Tabela de staging contendo departamentos de produtos. Origem: PCDEPTO do WINTHOR"
+    columns:
+      - name: id_departamento
+        description: "Identificador único do departamento (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: nome_departamento
+        description: "Nome do departamento"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: stg_secao
+    description: "Tabela de staging contendo seções de produtos. Origem: PCSECAO do WINTHOR"
+    columns:
+      - name: id_secao
+        description: "Identificador único da seção (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: nome_secao
+        description: "Nome da seção"
+        data_type: varchar2
+        data_tests:
+          - not_null
+      
+      - name: id_departamento
+        description: "Código do departamento ao qual a seção pertence (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_departamento')
+              field: id_departamento
+
+  - name: stg_marca
+    description: "Tabela de staging contendo marcas de produtos. Origem: PCMARCA do WINTHOR"
+    columns:
+      - name: id_marca
+        description: "Identificador único da marca (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: nome_marca
+        description: "Nome da marca"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: stg_movimentacao
+    description: "Tabela de staging contendo movimentações de estoque. Origem: PCMOV do WINTHOR"
+    columns:
+      - name: id_transacao_venda
+        description: "Identificador da transação de venda"
+        data_type: number
+      
+      - name: id_produto
+        description: "Código do produto (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_produtos')
+              field: id_produto
+      
+      - name: id_filial
+        description: "Código da filial (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_filiais')
+              field: id_filial
+      
+      - name: id_transacao_entrada
+        description: "Identificador da transação de entrada"
+        data_type: number
+      
+      - name: data_movimento
+        description: "Data da movimentação"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: codigo_operacao
+        description: "Código da operação (S=Saída, E=Entrada, etc)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+      
+      - name: quantidade
+        description: "Quantidade movimentada"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: preco_unitario
+        description: "Preço unitário do item"
+        data_type: number
+      
+      - name: custo_financeiro
+        description: "Custo financeiro do estoque"
+        data_type: number
+      
+      - name: custo_financeiro_movimento
+        description: "Custo financeiro da movimentação"
+        data_type: number
+      
+      - name: valor_st
+        description: "Valor da substituição tributária"
+        data_type: number
+      
+      - name: valor_ipi
+        description: "Valor do IPI"
+        data_type: number
+      
+      - name: valor_desconto
+        description: "Valor de desconto aplicado"
+        data_type: number
+      
+      - name: tipo_movimento
+        description: "Classificação do tipo de movimento (SAIDA, ENTRADA, OUTRO)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['SAIDA', 'ENTRADA', 'OUTRO']
+
+  - name: stg_notas_entrada
+    description: "Tabela de staging contendo notas fiscais de entrada. Origem: PCNFENT do WINTHOR"
+    columns:
+      - name: id_transacao_entrada
+        description: "Identificador único da transação de entrada (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: numero_nota
+        description: "Número da nota fiscal"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: id_fornecedor
+        description: "Código do fornecedor (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_fornecedores')
+              field: id_fornecedor
+      
+      - name: id_filial
+        description: "Código da filial (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_filiais')
+              field: id_filial
+      
+      - name: data_entrada
+        description: "Data de entrada da nota fiscal"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: data_emissao
+        description: "Data de emissão da nota fiscal"
+        data_type: date
+      
+      - name: valor_total_nota
+        description: "Valor total da nota fiscal"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: valor_frete
+        description: "Valor do frete"
+        data_type: number
+      
+      - name: valor_desconto
+        description: "Valor de desconto"
+        data_type: number
+
+  - name: stg_notas_saida
+    description: "Tabela de staging contendo notas fiscais de saída/venda. Origem: PCNFSAID do WINTHOR"
+    columns:
+      - name: id_transacao_venda
+        description: "Identificador único da transação de venda (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: numero_nota
+        description: "Número da nota fiscal"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: id_cliente
+        description: "Código do cliente (foreign key)"
+        data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_clientes')
+              field: id_cliente
+      
+      - name: id_filial
+        description: "Código da filial (foreign key)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_filiais')
+              field: id_filial
+      
+      - name: id_vendedor
+        description: "Código do vendedor (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_vendedores')
+              field: id_vendedor
+      
+      - name: id_supervisor
+        description: "Código do supervisor (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_supervisores')
+              field: id_supervisor
+      
+      - name: data_saida
+        description: "Data de saída da mercadoria"
+        data_type: date
+        data_tests:
+          - not_null
+      
+      - name: valor_total_nota
+        description: "Valor total da nota fiscal"
+        data_type: number
+        data_tests:
+          - not_null
+      
+      - name: valor_tabela
+        description: "Valor de tabela (sem descontos)"
+        data_type: number
+      
+      - name: valor_bonificacao
+        description: "Valor de bonificação"
+        data_type: number
+      
+      - name: valor_frete
+        description: "Valor do frete"
+        data_type: number
+      
+      - name: valor_outras_despesas
+        description: "Valor de outras despesas acessórias"
+        data_type: number
+      
+      - name: condicao_venad
+        description: "Condição de venda (possível erro de digitação no source)"
         data_type: varchar2

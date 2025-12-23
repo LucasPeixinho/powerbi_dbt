@@ -1,5 +1,0 @@
-SELECT
-    CODCOB,
-    COBRANCA
-FROM
-    {{ source('cedep', 'pccob')}} 

@@ -1,21 +1,29 @@
-SELECT 
-    RECNUM,
-    NUMNOTA,
-    DUPLIC,
-    CODCONTA,
-    CODFORNEC,
-    CODFILIAL,
-    DTEMISSAO,
-    DTLANC,
-    DTVENC,
-    DTPAGTO,
-    DTCOMPETENCIA,
-    VALOR,
-    VPAGO,
-    CASE
-        WHEN TIPOLANC = 'C' THEN 'CONFIRMADO'
-        WHEN TIPOLANC = 'P' THEN 'PROVISIONADO'
-        ELSE 'NÃO INFORMADO'
-    END AS TIPOLANC
-FROM {{ ref('int_contasapagar') }}
-WHERE {{ filtro_periodo('DTEMISSAO') }} 
+with contasapagar as (
+    select * from {{ ref('int_contasapagar') }}
+),
+
+final as (
+    select
+        id_lancamento,
+        numero_nota,
+        duplicata,
+        id_conta,
+        id_fornecedor,
+        id_filial,
+        data_emissao,
+        data_lancamento,
+        data_vencimento,
+        data_pagamento,
+        data_competencia,
+        valor_original,
+        valor_pago,
+        case
+            when tipo_lancamento = 'C' then 'CONFIRMADO'
+            when tipo_lancamento = 'P' then 'PROVISIONADO'
+            else 'NÃO INFORMADO'
+    end as tipo_lancamento
+    from contasapagar
+    where {{ filtro_periodo('data_emissao') }}
+)
+
+select * from final

@@ -1,21 +1,27 @@
-SELECT 
-    RECNUM,
-    NUMNOTA,
-    CODCONTA,
-    CODFORNEC,
-    CODFILIAL,
-    DTEMISSAO,
-    DTLANC,
-    DTVENC,
-    DTPAGTO,
-    DTESTORNOBAIXA,
-    DTCOMPETENCIA,
-    DUPLIC,
-    VALOR,
-    VPAGO,
-    VLVARIACAOCAMBIAL,
-    TIPOLANC
-FROM {{ source('cedep', 'pclanc')}}
---WHERE DTLANC BETWEEN TO_DATE('{{ var("dt_inicio", "2020-01-01") }}', 'YYYY-MM-DD') 
---                AND TO_DATE('{{ var("dt_fim", "2025-12-31") }}', 'YYYY-MM-DD')
--- ✅ Com filtro de DTLANC para o primeiro SELECT do UNION
+with source as (
+    select * from {{ source('cedep', 'pclanc') }}
+),
+
+final as (
+    select
+        RECNUM as id_lancamento,
+        NUMNOTA as numero_nota,
+        CODCONTA as id_conta,
+        CODFORNEC as id_fornecedor,
+        CODFILIAL as id_filial,
+        DTEMISSAO as data_emissao,
+        DTLANC as data_lancamento,
+        DTVENC as data_vencimento,
+        DTPAGTO as data_pagamento,
+        DTESTORNOBAIXA as data_estorno_baixa,
+        DTCOMPETENCIA as data_competencia,
+        DUPLIC as duplicata,
+        VALOR as valor_original,
+        VPAGO as valor_pago,
+        VLVARIACAOCAMBIAL as valor_variacao_cambial,
+        TIPOLANC as tipo_lancamento
+    from 
+        source
+)
+
+select * from final

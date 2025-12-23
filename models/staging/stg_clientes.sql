@@ -1,27 +1,17 @@
-SELECT
-    CODCLI,
-    CLIENTE,
-    DTPRIMCOMPRA,
+with source as (
+  select * from {{ source('cedep', 'pcclient') }}
+),
 
-    CASE
-        WHEN DTPRIMCOMPRA IS NULL
-          OR EXTRACT(YEAR FROM DTPRIMCOMPRA) < 1900
-          OR EXTRACT(YEAR FROM DTPRIMCOMPRA) > EXTRACT(YEAR FROM SYSDATE)
-        THEN DATE '1900-01-01'
-        ELSE DTPRIMCOMPRA
-    END AS DTPRIMCOMPRA_TRATADA,
+final as (
+  select
+    CODCLI as id_cliente,
+    CLIENTE as nome_cliente,
+    DTPRIMCOMPRA as data_primeira_compra,
+    INICIOATIV as data_inicio_atividade,
+    BAIRROCOM as info_extra,
+    TIPOFJ as tipo_cliente
+  from 
+    source
+)
 
-    INICIOATIV,
-
-    CASE
-        WHEN INICIOATIV IS NULL
-          OR EXTRACT(YEAR FROM INICIOATIV) < 1900
-          OR EXTRACT(YEAR FROM INICIOATIV) > EXTRACT(YEAR FROM SYSDATE)
-        THEN DATE '1900-01-01'
-        ELSE INICIOATIV
-    END AS INICIOATIV_TRATADA,
-
-    BAIRROCOM,
-    TIPOFJ
-
-FROM {{ source('cedep', 'pcclient')}} 
+select * from final

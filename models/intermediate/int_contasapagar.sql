@@ -1,40 +1,50 @@
-WITH lancamentos_base AS (
-    -- Primeira parte: lançamentos diretos (com filtro de DTLANC, sem CODFILIAL)
-    SELECT 
-        RECNUM,
-        NUMNOTA,
-        CODCONTA,
-        CODFORNEC,
-        CODFILIAL,
-        DTEMISSAO,
-        DTLANC,
-        DTVENC,
-        DTPAGTO,
-        DTCOMPETENCIA,
-        DUPLIC,
-        VALOR,
-        VPAGO,
-        TIPOLANC
-    FROM {{ ref('stg_contasapagar') }}  -- ✅ Usa a staging COM filtro de data
-    
-    UNION ALL
-    
-    -- Segunda parte: baixas de adiantamento (filtros aplicados no int_lanc_adiant)
-    SELECT 
-        RECNUM,
-        NUMNOTA,
-        CODCONTA,
-        CODFORNEC,
-        CODFILIAL,
-        DTEMISSAO,
-        DTLANC,
-        DTVENC,
-        DTPAGTO,
-        DTCOMPETENCIA,
-        DUPLIC,
-        VALOR,
-        VPAGO,
-        TIPOLANC
-    FROM {{ ref('int_lanc_adiant') }}  -- ✅ Já tem todos os filtros corretos
+with lancamentos as (
+    select * from stg_contasapagar
+),
+
+lancamentos_adiantamento as (
+    select * from int_lanc_adiant
+),
+
+final as (
+    select
+        id_lancamento,
+        numero_nota,
+        id_conta,
+        id_fornecedor,
+        id_filial,
+        data_emissao,
+        data_lancamento,
+        data_vencimento,
+        data_pagamento,
+        data_competencia,
+        duplicata,
+        valor_original,
+        valor_pago,
+        tipo_lancamento
+    from 
+        lancamentos
+
+    union all
+
+    select
+        id_lancamento,
+        numero_nota,
+        id_conta,
+        id_fornecedor,
+        id_filial,
+        data_emissao,
+        data_lancamento,
+        data_vencimento,
+        data_pagamento,
+        data_competencia,
+        duplicata,
+        valor_original,
+        valor_pago,
+        tipo_lancamento
+    from 
+        lancamentos_adiantamento
 )
-SELECT * FROM lancamentos_base
+
+select * from final
+

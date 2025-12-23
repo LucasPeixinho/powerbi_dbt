@@ -32,7 +32,7 @@ models:
         description: Identifica se o cliente é pessa física ou jurídica.
         data_type: varchar2
 
-  - name: stg_cobranca
+  - name: stg_cobrancas
     description: "Tabela de staging contendo dados de tipo de cobranças/pagamentos cadastrados. Origem: PCCOB do WINTHOR (servidor de produção)."
     columns:
       - name: CODCOB

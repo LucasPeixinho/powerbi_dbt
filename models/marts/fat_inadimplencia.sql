@@ -2,6 +2,7 @@ SELECT
     CODFILIAL,
     CODCLI,
     CODCOB,
+    CODCOBORIG,
     CODUSUR,
     DTVENC,      
     DTPAG,        

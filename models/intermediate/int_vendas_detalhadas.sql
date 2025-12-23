@@ -64,6 +64,7 @@ vendas_completas as (
         on m.id_transacao_venda = ns.id_transacao_venda
     left join produtos p 
         on m.id_produto = p.id_produto
+    where {{ filtro_periodo('m.data_movimento') }}
 )
 
 select * from vendas_completas

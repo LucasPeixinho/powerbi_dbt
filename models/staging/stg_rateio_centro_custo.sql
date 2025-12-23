@@ -5,7 +5,7 @@ with source as (
 final as (
     select
         RECNUM as id_lancamento, 
-        CODICOCENTROCUSTO as id_centro_custo,
+        CODIGOCENTROCUSTO as id_centro_custo,
         PERCRATEIO as percentual_rateio, 
         VALOR as valor
     from

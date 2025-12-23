@@ -1,35 +1,32 @@
-SELECT 
-    CODFILIAL,
-    CODCLI,
-    CODCOB,
-    CODCOBORIG,
-    CODUSUR,
-    DTVENC,      
-    DTPAG,        
-    DTEMISSAO,   
-    VALOR,
-    VPAGO,
-    -- Coluna SITUACAO baseada na lógica DAX
-    CASE
-        -- PAGO: qualquer pagamento até hoje
-        WHEN DTPAG IS NOT NULL AND DTPAG <= TRUNC(SYSDATE) THEN 'PAGO'
-        
-        -- EM DIA: não está pago, mas vence hoje ou no futuro
-        WHEN DTVENC >= TRUNC(SYSDATE) THEN 'EM DIA'
-        
-        -- ATRASO: vencido, mas dentro da janela de 10 dias
-        WHEN DTVENC < TRUNC(SYSDATE) AND DTVENC > TRUNC(SYSDATE) - 10 THEN 'ATRASO'
-        
-        -- INADIMPLENTE: vencido entre 10 dias e 6 meses
-        WHEN DTVENC <= TRUNC(SYSDATE) - 10 AND DTVENC >= ADD_MONTHS(TRUNC(SYSDATE) - 10, -6) THEN 'INADIMPLENTE'
-        
-        -- PERDIDO: mais de 6 meses atrás
-        WHEN DTVENC < ADD_MONTHS(TRUNC(SYSDATE) - 10, -6) THEN 'PERDIDO'
-        
-        ELSE 'INDEFINIDO'
-    END AS SITUACAO
+with contas_receber as (
+    select * from {{ ref('int_contasareceber') }}
+),
 
-FROM {{ ref('int_contasareceber') }}
+final as (
+    select
+        id_filial,
+        id_cliente,
+        id_cobranca,
+        id_cobranca_original,
+        id_vendedor,
+        numero_prestacao,
+        duplicata,
+        data_vencimento,
+        data_pagamento,
+        data_emissao,
+        valor_original,
+        valor_pago,
+        case
+            when data_pagamento is not null and data_pagamento <= trunc(sysdate) then 'PAGO'
+            when data_vencimento >= trunc(sysdate) then 'EM DIA'
+            when data_vencimento < trunc(sysdate) and data_vencimento > trunc(sysdate) - 10 then 'ATRASO'
+            when data_vencimento <= trunc(sysdate) - 10 and data_vencimento >= add_months(trunc(sysdate) - 10, -6) then 'INADIMPLENTE'
+            when data_vencimento <add_months(trunc(sysdate) -10, -6) then 'PERDIDO'
+            else 'INDEFINIDO'
+            end as situacao
+    from contas_receber
+    where id_cobranca not in ('DEVP', 'DEVT', 'BNF', 'BNFT', 'BNFR', 'BNTR', 'BNRP', 'CRED', 'DESD')
+    and {{ filtro_periodo('data_vencimento') }}
+)
 
-WHERE CODCOB NOT IN ('DEVP', 'DEVT', 'BNF', 'BNFT', 'BNFR', 'BNTR', 'BNRP', 'CRED', 'DESD')
-  AND {{ filtro_periodo('DTVENC') }}
+select * from final

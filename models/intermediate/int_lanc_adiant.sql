@@ -19,8 +19,8 @@ final as (
         ba.data_pagamento,
         la.data_competencia,
         la.duplicata,
-        ((ba.valor_original + nvl(ba.valor_variacao_cambial, 0)) * (-1)) as valor_original,
-        ((ba.valor_pago + nvl(ba.valor_variacao_cambial, 0)) * (-1)) as valor_pago,
+        ((ba.valor_original + coalesce(ba.valor_variacao_cambial, 0)) * (-1)) as valor_original,
+        ((ba.valor_pago + coalesce(ba.valor_variacao_cambial, 0)) * (-1)) as valor_pago,
         la.tipo_lancamento
     from  
         lancamentos_adiantamento a
@@ -29,7 +29,7 @@ final as (
         on a.id_lancamento_adiantamento = la.id_lancamento
     left join
         lancamentos ba
-        on a.id_lancamento_pagamento -= ba. id_lancamento
+        on a.id_lancamento_pagamento = ba. id_lancamento
     where
         ba.data_pagamento is not null
         and ba.data_estorno_baixa is null

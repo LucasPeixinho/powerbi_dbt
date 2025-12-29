@@ -1,0 +1,177 @@
+# models/analytics/schema.yml
+version: 2
+
+models:
+  - name: analytics_kpi_global
+    description: "KPIs globais consolidados para cards do dashboard. Grão: Total (1 linha)"
+    config:
+      tags: ['analytics', 'streamlit', 'kpi']
+    columns:
+      - name: data_atualizacao
+        description: "Timestamp da última atualização da tabela"
+      - name: data_referencia
+        description: "Data de referência dos dados (última data de movimento)"
+      - name: receita_liquida
+        description: "Receita líquida total (receita_bruta - desconto)"
+      - name: margem_contribuicao
+        description: "Margem de contribuição (receita_liquida - custo_total_ajustado)"
+      - name: margem_percentual
+        description: "Margem % (margem_contribuicao / receita_liquida)"
+      - name: ticket_medio
+        description: "Ticket médio (receita_liquida / qtd_transacoes)"
+      - name: var_receita_mom_pct
+        description: "Variação % de receita vs mês anterior"
+      - name: var_margem_mom_pct
+        description: "Variação % de margem vs mês anterior"
+      - name: var_margem_pp
+        description: "Variação em pontos percentuais da margem %"
+
+  - name: analytics_margem_mensal
+    description: "Evolução mensal de receitas, custos e margens. Grão: ano_mes"
+    config:
+      tags: ['analytics', 'streamlit', 'temporal']
+    columns:
+      - name: ano_mes
+        description: "Data do mês (primeiro dia)"
+        tests:
+          - not_null
+          - unique
+      - name: ano
+        description: "Ano (YYYY)"
+      - name: mes
+        description: "Mês (1-12)"
+      - name: receita_liquida
+        description: "Receita líquida do mês"
+      - name: margem_contribuicao
+        description: "Margem de contribuição do mês"
+      - name: margem_percentual
+        description: "Margem % do mês"
+      - name: var_receita_mom_pct
+        description: "Variação % de receita vs mês anterior"
+      - name: receita_liquida_ytd
+        description: "Receita acumulada no ano até o mês"
+
+  - name: analytics_fornecedor
+    description: "Análise consolidada por fornecedor com rankings e curva ABC. Grão: id_fornecedor"
+    config:
+      tags: ['analytics', 'streamlit', 'fornecedor']
+    columns:
+      - name: id_fornecedor
+        description: "ID único do fornecedor"
+        tests:
+          - not_null
+          - unique
+      - name: nome_fornecedor
+        description: "Razão social do fornecedor"
+      - name: receita_liquida
+        description: "Receita líquida total do fornecedor"
+      - name: margem_contribuicao
+        description: "Margem de contribuição total"
+      - name: margem_percentual
+        description: "Margem % média do fornecedor"
+      - name: ranking_receita
+        description: "Posição no ranking de receita (1 = maior)"
+      - name: curva_abc
+        description: "Classificação ABC (A/B/C) baseada em receita acumulada"
+      - name: faixa_margem
+        description: "Faixa de margem (Alta/Média/Baixa/Negativa)"
+      - name: participacao_receita_pct
+        description: "% de participação na receita total"
+      - name: status_atividade
+        description: "Status de atividade (Ativo/Inativo Recente/Inativo)"
+
+  - name: analytics_matriz_estrategica
+    description: "Matriz estratégica para scatter plot - posicionamento de fornecedores. Grão: id_fornecedor"
+    config:
+      tags: ['analytics', 'streamlit', 'estrategia']
+    columns:
+      - name: id_fornecedor
+        description: "ID único do fornecedor"
+      - name: quadrante_estrategico
+        description: "Classificação estratégica (Estrela/Nicho/Negociar/Cortar)"
+      - name: score_atratividade
+        description: "Score de 0-100 baseado em margem e receita"
+      - name: gap_meta_margem_pp
+        description: "Diferença em pp entre margem atual e meta (25%)"
+      - name: prioridade_gestao
+        description: "Nível de prioridade para ação gerencial"
+      - name: mediana_receita
+        description: "Mediana de receita (linha de referência vertical)"
+      - name: meta_margem_pct
+        description: "Meta de margem % (linha de referência horizontal)"
+
+  - name: analytics_produto
+    description: "Análise detalhada por produto. Grão: id_produto"
+    config:
+      tags: ['analytics', 'streamlit', 'produto']
+    columns:
+      - name: id_produto
+        description: "ID único do produto"
+        tests:
+          - not_null
+          - unique
+      - name: descricao_produto
+        description: "Descrição do produto"
+      - name: nome_departamento
+        description: "Departamento do produto"
+      - name: nome_secao
+        description: "Seção do produto"
+      - name: nome_marca
+        description: "Marca do produto"
+      - name: receita_liquida
+        description: "Receita líquida do produto"
+      - name: margem_percentual
+        description: "Margem % do produto"
+      - name: ranking_receita_global
+        description: "Ranking global de receita"
+      - name: ranking_receita_fornecedor
+        description: "Ranking de receita dentro do fornecedor"
+
+  - name: analytics_hierarquia_produto
+    description: "Agregação por departamento/seção/marca. Grão: id_departamento + id_secao + id_marca"
+    config:
+      tags: ['analytics', 'streamlit', 'categoria']
+    columns:
+      - name: id_departamento
+        description: "ID do departamento"
+      - name: nome_departamento
+        description: "Nome do departamento"
+      - name: id_secao
+        description: "ID da seção"
+      - name: nome_secao
+        description: "Nome da seção"
+      - name: id_marca
+        description: "ID da marca"
+      - name: nome_marca
+        description: "Nome da marca"
+      - name: receita_liquida
+        description: "Receita líquida da combinação"
+      - name: margem_percentual
+        description: "Margem % da combinação"
+
+  - name: analytics_vendedor
+    description: "Performance por vendedor e supervisor. Grão: id_vendedor"
+    config:
+      tags: ['analytics', 'streamlit', 'vendedor']
+    columns:
+      - name: id_vendedor
+        description: "ID único do vendedor"
+        tests:
+          - not_null
+          - unique
+      - name: nome_vendedor
+        description: "Nome do vendedor"
+      - name: id_supervisor
+        description: "ID do supervisor do vendedor"
+      - name: nome_supervisor
+        description: "Nome do supervisor"
+      - name: receita_liquida
+        description: "Receita líquida total do vendedor"
+      - name: margem_percentual
+        description: "Margem % média do vendedor"
+      - name: ticket_medio
+        description: "Ticket médio do vendedor"
+      - name: ranking_receita
+        description: "Ranking global de receita"
+      - name: ranking_no_supervisor
+        description: "Ranking dentro da equipe do supervisor"

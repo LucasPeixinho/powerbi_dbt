@@ -40,6 +40,9 @@ models:
 
     marts:
       +materialized: table
+    
+    analytics:
+      +materialized: table
 
 seeds:
   powerbi:

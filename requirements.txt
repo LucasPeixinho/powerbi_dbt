@@ -1,0 +1,6 @@
+# dbt Core and Oracle Adapter
+dbt-core>=1.7.0
+dbt-oracle>=1.7.0
+
+# Oracle Database Driver
+cx-Oracle>=8.3.0

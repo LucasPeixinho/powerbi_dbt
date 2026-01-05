@@ -14,6 +14,7 @@ final as (
     select
         c.id_lancamento,
         c.numero_nota,
+        c.id_banco,
         c.id_conta,
         g.id_grupo_conta,
         c.id_fornecedor,

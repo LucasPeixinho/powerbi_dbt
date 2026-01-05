@@ -10,6 +10,7 @@ final as (
     select
         ba.id_lancamento,
         la.numero_nota,
+        la.id_banco,
         la.id_conta,
         la.id_fornecedor,
         la.id_filial,

@@ -6,6 +6,7 @@ final as (
     select
         RECNUM as id_lancamento,
         NUMNOTA as numero_nota,
+        NUMBANCO as id_banco,
         CODCONTA as id_conta,
         CODFORNEC as id_fornecedor,
         CODFILIAL as id_filial,

@@ -1,15 +1,16 @@
 with lancamentos as (
-    select * from stg_contasapagar
+    select * from {{ ref('stg_contasapagar') }}
 ),
 
 lancamentos_adiantamento as (
-    select * from int_lanc_adiant
+    select * from {{ ref('int_lanc_adiant') }}
 ),
 
 final as (
     select
         id_lancamento,
         numero_nota,
+        id_banco,
         id_conta,
         id_fornecedor,
         id_filial,
@@ -30,6 +31,7 @@ final as (
     select
         id_lancamento,
         numero_nota,
+        id_banco,
         id_conta,
         id_fornecedor,
         id_filial,

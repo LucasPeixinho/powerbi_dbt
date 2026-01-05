@@ -166,7 +166,15 @@ models:
       - name: numero_nota
         description: "Número da nota fiscal associada ao lançamento"
         data_type: number
-      
+
+      - name: id_banco
+        description: "Código do banco (foreign key)"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('stg_bancos')
+              field: id_banco
+
       - name: id_conta
         description: "Código da conta contábil (foreign key)"
         data_type: number
@@ -403,28 +411,44 @@ models:
         data_tests:
           - unique
           - not_null
-      
+
       - name: id_lancamento_pagamento
         description: "Identificador do lançamento de pagamento relacionado"
         data_type: number
         data_tests:
           - not_null
-      
+
       - name: valor_original
         description: "Valor do adiantamento"
         data_type: number
         data_tests:
           - not_null
-      
+
       - name: data_lancamento
         description: "Data do lançamento do adiantamento"
         data_type: date
         data_tests:
           - not_null
-      
+
       - name: data_estorno
         description: "Data de estorno do adiantamento (null se não estornado)"
         data_type: date
+
+  - name: stg_bancos
+    description: "Tabela de staging contendo cadastro de bancos. Origem: PCBANCO do WINTHOR"
+    columns:
+      - name: id_banco
+        description: "Identificador único do banco (primary key)"
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+
+      - name: nome_banco
+        description: "Nome do banco"
+        data_type: varchar2
+        data_tests:
+          - not_null
 
   - name: stg_produtos
     description: "Tabela de staging contendo cadastro de produtos. Origem: PCPRODUT do WINTHOR"

@@ -103,6 +103,14 @@ models:
         description: "Número da nota fiscal"
         data_type: number
 
+      - name: id_banco
+        description: "Código do banco"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_bancos')
+              field: id_banco
+
       - name: id_conta
         description: "Código da conta contábil"
         data_type: number
@@ -347,6 +355,14 @@ models:
         description: "Número da nota fiscal"
         data_type: number
 
+      - name: id_banco
+        description: "Código do banco"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('int_bancos')
+              field: id_banco
+
       - name: id_conta
         description: "Código da conta contábil"
         data_type: number
@@ -406,6 +422,22 @@ models:
       - name: tipo_lancamento
         description: "Tipo do lançamento"
         data_type: varchar2
+
+  - name: int_bancos
+    description: "Camada intermediate de bancos"
+    columns:
+      - name: id_banco
+        description: "Identificador único do banco"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_banco
+        description: "Nome do banco"
+        data_type: varchar2
+        data_tests:
+          - not_null
 
   - name: int_produtos
     description: "Camada intermediate de produtos enriquecida com departamento, seção e marca"

@@ -35,3 +35,116 @@ models:
       - name: vpago
         description: Valor pago
         data_type: number
+
+  - name: dim_bancos
+    description: "Dimensão de bancos para uso nos marts"
+    columns:
+      - name: id_banco
+        description: "Identificador único do banco"
+        data_tests:
+          - unique
+          - not_null
+        data_type: number
+
+      - name: nome_banco
+        description: "Nome do banco"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+  - name: fat_contasapagar_cc
+    description: "Tabela de fatos de contas a pagar com rateio por centro de custo"
+    columns:
+      - name: id_lancamento
+        description: "Identificador do lançamento"
+        data_tests:
+          - not_null
+        data_type: number
+
+      - name: numero_nota
+        description: "Número da nota fiscal"
+        data_type: number
+
+      - name: id_banco
+        description: "Código do banco"
+        data_type: number
+        data_tests:
+          - relationships:
+              to: ref('dim_bancos')
+              field: id_banco
+
+      - name: id_conta
+        description: "Código da conta contábil"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: id_grupo_conta
+        description: "Código do grupo de contas"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: id_fornecedor
+        description: "Código do fornecedor"
+        data_type: number
+
+      - name: id_filial
+        description: "Código da filial"
+        data_type: varchar2
+
+      - name: data_emissao
+        description: "Data de emissão do documento"
+        data_type: date
+
+      - name: data_lancamento
+        description: "Data do lançamento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_vencimento
+        description: "Data de vencimento"
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: data_pagamento
+        description: "Data efetiva do pagamento"
+        data_type: date
+
+      - name: data_competencia
+        description: "Data de competência contábil"
+        data_type: date
+
+      - name: duplicata
+        description: "Número da duplicata"
+        data_type: varchar2
+
+      - name: id_centro_custo
+        description: "Código do centro de custo (99.999 se não houver rateio)"
+        data_type: varchar2
+        data_tests:
+          - not_null
+
+      - name: percentual_rateio
+        description: "Percentual de rateio aplicado ao centro de custo (100% se não houver rateio)"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: valor_original
+        description: "Valor original do lançamento rateado"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: valor_pago
+        description: "Valor efetivamente pago rateado"
+        data_type: number
+        data_tests:
+          - not_null
+
+      - name: tipo_lancamento
+        description: "Tipo do lançamento"
+        data_type: varchar2

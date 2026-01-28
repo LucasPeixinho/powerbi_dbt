@@ -24,3 +24,6 @@ sources:
        -  name: pcsecao
        -  name: pcmarca
        -  name: pcbanco
+       - name: pcempr
+       - name: pcmovcr
+       - name: pcsetor
